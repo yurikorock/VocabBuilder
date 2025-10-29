@@ -1,10 +1,18 @@
 //App.tsx
 import { Route, Routes } from "react-router-dom";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+
+import PrivateRoute from "./components/PrivateRoute";
+import MainPage from "./pages/MainPage/MainPage";
+import DictionaryPage from "./pages/DictionaryPage/DictionaryPage";
+import RecommendPage from "./pages/RecommendPage/RecommendPage";
+import TrainingPage from "./pages/TrainingPage/TrainingPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
 import "./App.css";
-import NotFoundPage from "./assets/pages/NotFoundPage/NotFoundPage";
-import RestrictedRoute from "./components/PrivateRoute";
-import PrivateRoute from "./components/PrivateRoute";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import Layout from "./components/Layout/Layout";
+import RestrictedRoute from "./components/RestrictedRoute";
 
 function App() {
   return (

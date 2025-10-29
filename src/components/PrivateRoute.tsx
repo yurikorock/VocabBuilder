@@ -10,5 +10,6 @@ interface PrivateRouteProps {
 
 export default function PrivateRoute ({component: Component, redirectTo}:PrivateRouteProps){
    const isLoggedIn = useSelector(selectIsLoggedIn);
+   if (isLoggedIn === undefined) return null;
    return isLoggedIn ? <Component/> : <Navigate to={redirectTo} replace/>;
 }

@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
-import css from "./Layout.module.css";
+
+import Header from "../Header/Header";
+import ModalContainer from "../ModalContainer/ModalContainer";
 
 export default function Layout() {
   return (
