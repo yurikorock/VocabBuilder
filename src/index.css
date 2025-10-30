@@ -1,5 +1,107 @@
+@font-face {
+  font-family: "MacPaw Fixel Display";
+  src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Bold.otf), format("opentype");
+}
+@font-face {
+  font-family: "MacPaw Fixel Display";
+  src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-ExtraBold.otf), format("opentype");
+}
+@font-face {
+  font-family: "MacPaw Fixel Display";
+  src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Light.otf), format("opentype");
+}
+@font-face {
+  font-family: "MacPaw Fixel Display";
+  src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Medium.otf), format("opentype");
+}
+@font-face {
+  font-family: "MacPaw Fixel Display";
+  src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Regular.otf), format("opentype");
+}
+@font-face {
+  font-family: "MacPaw Fixel Display";
+  src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-SemiBold.otf), format("opentype");
+}
+@font-face {
+  font-family: "MacPaw Fixel Display";
+  src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Thin.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Black.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-BlackItalic.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Bold.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-BoldItalic.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("MacPaw Fixel Display"), url(/src/fonts/SF-Pro-Display-Heavy.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-HeavyItalic.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Light.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-LightItalic.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Medium.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-MediumItalic.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Regular.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-RegularItalic.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Semibold.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-SemiboldItalic.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Thin.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-ThinItalic.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Ultralight.otf), format("opentype");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-UltralightItalic.otf), format("opentype");
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --main-family: "MacPaw Fixel Display", sans-serif;
+  --second-family: "SF Pro Display", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -23,6 +125,7 @@ a:hover {
 }
 
 body {
+  font-family: var(--main-family);
   margin: 0;
   display: flex;
   place-items: center;
