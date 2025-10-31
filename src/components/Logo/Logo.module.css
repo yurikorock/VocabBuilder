@@ -1,0 +1,23 @@
+.logo {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+   
+    height: 36px;
+
+}
+
+.icon {
+    height: 36px;
+    width: 36px;
+}
+
+.text {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.33;
+    color: black;
+    margin: 0;
+}

@@ -1,102 +1,178 @@
 @font-face {
   font-family: "MacPaw Fixel Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Bold.otf), format("opentype");
+  font-weight: 700;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "MacPaw Fixel Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-ExtraBold.otf), format("opentype");
+  font-weight: 800;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "MacPaw Fixel Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Light.otf), format("opentype");
+  font-weight: 300;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "MacPaw Fixel Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Medium.otf), format("opentype");
+  font-weight: 500;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "MacPaw Fixel Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Regular.otf), format("opentype");
+  font-weight: 400;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "MacPaw Fixel Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-SemiBold.otf), format("opentype");
+  font-weight: 600;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "MacPaw Fixel Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Thin.otf), format("opentype");
+  font-weight: 100;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Black.otf), format("opentype");
+    font-weight: 900;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-BlackItalic.otf), format("opentype");
+  font-weight: 900;
+  font-style: italic;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Bold.otf), format("opentype");
+  font-weight: 700;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-BoldItalic.otf), format("opentype");
+  font-weight: 700;
+  font-style: italic;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/SF-Pro-Display-Heavy.otf), format("opentype");
+   font-weight: 800;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-HeavyItalic.otf), format("opentype");
+  font-weight: 800;
+  font-style: italic;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Light.otf), format("opentype");
+  font-weight: 300;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-LightItalic.otf), format("opentype");
+  font-weight: 300;
+  font-style: italic;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Medium.otf), format("opentype");
+  font-weight: 500;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-MediumItalic.otf), format("opentype");
+   font-weight: 500;
+  font-style: italic;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Regular.otf), format("opentype");
+  font-weight: 400;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-RegularItalic.otf), format("opentype");
+   font-weight: 400;
+  font-style: italic;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Semibold.otf), format("opentype");
+   font-weight: 600;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-SemiboldItalic.otf), format("opentype");
+  font-weight: 600;
+  font-style: italic;
+  
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Thin.otf), format("opentype");
+  font-weight: 200;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-ThinItalic.otf), format("opentype");
+   font-weight: 200;
+  font-style: italic;
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-Ultralight.otf), format("opentype");
+  font-weight: 100;
+  font-style: normal;
+
 }
+
 @font-face {
   font-family: "SF Pro Display";
   src: local("SF Pro Display"), url(/src/fonts/SF-Pro-Display-UltralightItalic.otf), format("opentype");
+  font-weight: 100;
+  font-style: italic;
 }
 
 :root {
@@ -120,15 +196,15 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
 body {
   font-family: var(--main-family);
+
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -149,9 +225,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -162,9 +240,11 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }

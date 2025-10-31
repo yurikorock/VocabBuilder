@@ -1,7 +1,12 @@
+import Logo from "../Logo/Logo";
+import css from "./Header.module.css"
+
 export default function Header() {
   return (
-    <>
-      <p>Header</p>
-    </>
+    <div className={css.container}>
+      <Logo/>
+      {/* <UserNav/> */}
+      {/* <UserBar/> */}
+    </div>
   );
 }
