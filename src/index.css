@@ -1,3 +1,5 @@
+
+
 @font-face {
   font-family: "MacPaw Fixel Display";
   src: local("MacPaw Fixel Display"), url(/src/fonts/MacPawFixelDisplay-Bold.otf), format("opentype");
@@ -213,7 +215,21 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
 
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;

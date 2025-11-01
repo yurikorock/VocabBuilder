@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import css from "./RegistrationForm.module.css";
+import type { JSX } from "react";
+import { NavLink } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -28,7 +30,7 @@ interface FormData {
   password: string;
 }
 
-export default function RegistrationForm() {
+export default function RegistrationForm(): JSX.Element {
   const {
     register,
     handleSubmit,
@@ -40,8 +42,15 @@ export default function RegistrationForm() {
 
   return (
     <div className={css.wrapper}>
+      <section className={css.title_wrap}>
+        <h2 className={css.title}>Register</h2>
+        <p className={css.descr}>
+          To start using our services, please fill out the registration form
+          below. All fields are mandatory:
+        </p>
+      </section>
       {/* /* ** FORM ** */}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={css.register_form}>
         <input type="text" placeholder="Name" {...register("name")} />
         {errors.name && <p>{errors.name.message}</p>}
         <input type="email" placeholder="Email" {...register("email")} />
@@ -53,6 +62,7 @@ export default function RegistrationForm() {
         />
         {errors.password && <p>{errors.password.message}</p>}
         <button type="submit">Register</button>
+        <NavLink to="/login" type="button">Login</NavLink>
       </form>
     </div>
   );
