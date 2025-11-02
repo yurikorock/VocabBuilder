@@ -14,6 +14,7 @@ import {
 import authReducer from "./auth/authSlice";
 
 import storage from "redux-persist/lib/storage";
+import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
 
 // Persisting token field from auth slice to localstorage
 const authPersistConfig = {
@@ -35,3 +36,7 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const persistor = persistStore(store);
+
+// ✅ Типізовані хуки для TypeScript
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

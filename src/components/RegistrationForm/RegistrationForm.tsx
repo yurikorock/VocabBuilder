@@ -2,8 +2,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import css from "./RegistrationForm.module.css";
-import type { JSX } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, type JSX } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import { register as registerUser } from "../../redux/auth/operation";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
 
 const schema = yup
   .object({
@@ -15,10 +19,10 @@ const schema = yup
     password: yup
       .string()
       .matches(
-        /^(?=(?:.*[A-Za-z]){6,})(?=.*\d)[A-Za-z\d]{7,}$/,
-        "Password must contain at least 6 letters and 1 number"
+        /^(?=.*[A-Za-z]{6,})(?=.*\d)[A-Za-z\d]+$/,
+        "Password must consist of at least 6 English letters and 1 number"
       )
-      .min(8, "Password must be at least 8 characters")
+      .min(7, "Password must be at least 7 characters")
       .max(50, "Password must be at most 50 characters")
       .required("Password is required"),
   })
@@ -31,6 +35,10 @@ interface FormData {
 }
 
 export default function RegistrationForm(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -38,7 +46,17 @@ export default function RegistrationForm(): JSX.Element {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data: FormData) => console.log(data);
+  const onSubmit = (data: FormData) => {
+    dispatch(registerUser(data));
+    console.log(data);
+  };
+
+  // 👇 Коли користувач логіниться — редирект на Dictionary qwerty1
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dictionary");
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div className={css.wrapper}>
@@ -62,7 +80,9 @@ export default function RegistrationForm(): JSX.Element {
         />
         {errors.password && <p>{errors.password.message}</p>}
         <button type="submit">Register</button>
-        <NavLink to="/login" type="button">Login</NavLink>
+        <NavLink to="/login" type="button">
+          Login
+        </NavLink>
       </form>
     </div>
   );

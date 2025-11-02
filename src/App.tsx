@@ -13,6 +13,7 @@ import "./App.css";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import Layout from "./components/Layout/Layout";
 import RestrictedRoute from "./components/RestrictedRoute";
+import { Toaster } from "react-hot-toast";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 }

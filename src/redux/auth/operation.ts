@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
+import toast from "react-hot-toast";
 
 axios.defaults.baseURL = "https://vocab-builder-backend.p.goit.global/api";
 
@@ -45,9 +46,13 @@ export const register = createAsyncThunk<
     const res = await axios.post<AuthResponse>("/users/signup", credentials);
     // After successful registration, add the token to the HTTP header
     setAuthHeader(res.data.token);
+    toast.success("Registration successful!");
     return res.data;
   } catch (error: any) {
-    return thunkApi.rejectWithValue(error.message || "Registration failed");
+    const message =
+      error.response?.data.message || "Registration failed. Please try again.";
+    toast.error(message);
+    return thunkApi.rejectWithValue(message);
   }
 });
 
