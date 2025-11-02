@@ -1,31 +1,65 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  type ActionReducerMapBuilder,
+} from "@reduxjs/toolkit";
+import { logIn, logOut, refreshUser, register } from "./operation";
 
-interface AuthState {
-  isLoggedIn: boolean;
+interface User {
+  _id?: string;
+  name: string | null;
   email: string | null;
 }
 
-const initialState: AuthState = {
-  isLoggedIn: false,
-  email: null,
-};
-
-interface SetUserPayload {
-  email: string;
+interface AuthState {
+  user: User;
+  token: string | null;
+  isLoggedIn: boolean;
+  isRefreshing: boolean;
 }
+
+const initialState: AuthState = {
+  user: {
+    name: null,
+    email: null,
+  },
+  token: null,
+  isLoggedIn: false,
+  isRefreshing: false,
+};
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    setUser(state, action: PayloadAction<SetUserPayload>) {
-      state.email = action.payload.email;
-      state.isLoggedIn = true;
-    },
-    removeUser(state) {
-      state.isLoggedIn = false;
-    },
+  reducers: {},
+  extraReducers: (builder: ActionReducerMapBuilder<AuthState>) => {
+    builder
+      .addCase(register.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(logIn.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(logOut.fulfilled, (state) => {
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(refreshUser.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, (state) => {
+        state.isRefreshing = false;
+      });
   },
 });
-export const { setUser, removeUser } = authSlice.actions;
+
 export default authSlice.reducer;

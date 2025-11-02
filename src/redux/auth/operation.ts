@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import type { RootState } from "../store";
 
 axios.defaults.baseURL = "https://vocab-builder-backend.p.goit.global/api";
 
@@ -100,7 +101,7 @@ export const logIn = createAsyncThunk<
 export const refreshUser = createAsyncThunk<
   AuthResponse,
   void,
-  { rejectValue: string; state: { auth: { token: string | null } } }
+  { rejectValue: string; state: RootState }
 >("auth/refresh", async (_, thunkAPI) => {
   // Reading the token from the state via getState()
   const state = thunkAPI.getState();
