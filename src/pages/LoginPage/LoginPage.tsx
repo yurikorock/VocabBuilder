@@ -1,8 +1,14 @@
+import Header from "../../components/Header/Header"
+import Hero from "../../components/Hero/Hero"
+import LoginForm from "../../components/LoginForm/LoginForm"
 
 export default function LoginPage() {
   return (
     <>
-      <p>Login Page</p>
+    <Header/>
+    <Hero/>
+    <LoginForm/>
+    
     </>
   );
 }
