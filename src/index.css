@@ -191,6 +191,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --black: #121417;
+	--green: #85aa9f;
+	--white: #fcfcfc;
+	--white-1: #f8f8f8;
 }
 
 a {

@@ -43,9 +43,15 @@ export default function RegistrationForm(): JSX.Element {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+
+  const watchName = watch("name");
+  const watchEmail = watch("email");
+  const watchPassword = watch("password");
+
   const onSubmit = (data: FormData) => {
     dispatch(registerUser(data));
     console.log(data);
@@ -69,18 +75,40 @@ export default function RegistrationForm(): JSX.Element {
       </section>
       {/* /* ** FORM ** */}
       <form onSubmit={handleSubmit(onSubmit)} className={css.register_form}>
-        <input type="text" placeholder="Name" {...register("name")} />
-        {errors.name && <p>{errors.name.message}</p>}
-        <input type="email" placeholder="Email" {...register("email")} />
-        {errors.email && <p>{errors.email.message}</p>}
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
-        {errors.password && <p>{errors.password.message}</p>}
-        <button type="submit">Register</button>
-        <NavLink to="/login" type="button">
+        <div className={css.input_wrap}>
+          <input
+            type="text"
+            placeholder="Name"
+            {...register("name")}
+            className={`${css.input_form} ${errors.name ? css.error : ""} ${
+              !errors.name && watchName ? css.correct : ""
+            }  `}
+          />
+          {errors.name && <p>{errors.name.message}</p>}
+          <input
+            type="email"
+            placeholder="Email"
+            {...register("email")}
+            className={`${css.input_form} ${errors.email ? css.error : ""} ${
+              !errors.email && watchEmail ? css.correct : ""
+            }  `}
+          />
+          {errors.email && <p>{errors.email.message}</p>}
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password")}
+            className={`${css.input_form} ${errors.password ? css.error : ""} ${
+              !errors.password && watchPassword ? css.correct : ""
+            }  `}
+          />
+          {errors.password && <p>{errors.password.message}</p>}
+        </div>
+
+        <button className={css.btn_register} type="submit">
+          Register
+        </button>
+        <NavLink to="/login" type="button" className={css.link_login}>
           Login
         </NavLink>
       </form>

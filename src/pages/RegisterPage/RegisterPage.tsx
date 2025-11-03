@@ -8,7 +8,7 @@ export default function RegisterPage() {
     <Header/>
     <Hero/>
     <RegistrationForm/>
-      <p>Register Page</p>
+    
     </>
   );
 }
