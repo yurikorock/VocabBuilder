@@ -1,5 +1,6 @@
 .wrapper {
     max-width: 375px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding: 32px 16px 57px;
@@ -40,6 +41,7 @@
 }
 
 .input_wrap:not(:last-child) {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -47,6 +49,7 @@
 }
 
 .input_form {
+
     border: 1px solid rgba(18, 20, 23, 0.1);
     border-radius: 15px;
     padding: 16px 18px 16px 18px;
@@ -63,14 +66,33 @@
 .input_form.error {
     border: 1px solid #d80027;
 }
+
 .input_form.correct {
-  border: 1px solid #3cbf61;
+    border: 1px solid #3cbf61;
 }
 
 
 .input_form:hover {
     border: 1px solid var(--green);
 }
+
+.toggleBtn {
+    all: unset;
+    position: absolute;
+    right: 18px;
+    top: 162px;
+    outline: none;
+    cursor: pointer;
+}
+
+.toggleBtn:focus,
+.toggleBtn:hover {
+
+    outline: none;
+    border-color: transparent;
+
+}
+
 
 .btn_register {
     display: flex;

@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import css from "./RegistrationForm.module.css";
-import { useEffect, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { register as registerUser } from "../../redux/auth/operation";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const schema = yup
   .object({
@@ -38,6 +39,7 @@ export default function RegistrationForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -95,7 +97,7 @@ export default function RegistrationForm(): JSX.Element {
           />
           {errors.email && <p>{errors.email.message}</p>}
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             {...register("password")}
             className={`${css.input_form} ${errors.password ? css.error : ""} ${
@@ -103,6 +105,13 @@ export default function RegistrationForm(): JSX.Element {
             }  `}
           />
           {errors.password && <p>{errors.password.message}</p>}
+          <button
+                type="button"
+                className={css.toggleBtn}
+                onClick={() => setShowPassword((e) => !e)}
+              >
+                {showPassword ? <FiEye size={20} /> : <FiEyeOff size={20} />}
+              </button>
         </div>
 
         <button className={css.btn_register} type="submit">
