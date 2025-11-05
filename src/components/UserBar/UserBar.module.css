@@ -1,0 +1,56 @@
+.user_bar_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.user_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.user_name {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--black);
+}
+
+.icon_wrap {
+    border-radius: 30px;
+    width: 36px;
+    height: 36px;
+    background: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user_icon {
+    width: 20px;
+    height: 20px;
+    fill: rgba(252, 252, 252, 0.7);
+}
+
+.burger_btn {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-color: blue;
+    outline: blue;
+    cursor: pointer;
+}
+
+.burger_icon {
+    width: 32px;
+    height: 22px;
+    stroke: var(--black);
+}

@@ -12,7 +12,7 @@ export default function Layout(): JSX.Element {
         <Outlet />
       </main>
       <ModalContainer />
-      <p>Layout Page</p>
+    
     </>
   );
 }

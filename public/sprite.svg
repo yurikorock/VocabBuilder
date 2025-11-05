@@ -2,7 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
   <defs>
     <symbol id="icon-burger-menu" viewBox="0 0 46 32">
-      <path stroke-linecap="round" stroke-width="3.429" d="M8.671 5.074H44M8.671 24.468H44M19.603 14.771h24.398"/>
+      <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-width="3.429" d="M8.671 5.074H44M8.671 24.468H44M19.603 14.771h24.398"/>
     </symbol>
     <symbol id="icon-user" viewBox="0 0 32 32">
       <path d="M16 5.333a5.332 5.332 0 1 1 0 10.665 5.332 5.332 0 0 1 0-10.665zm0 21.334s10.667 0 10.667-2.667c0-3.2-5.2-6.667-10.667-6.667S5.333 20.8 5.333 24C5.333 26.667 16 26.667 16 26.667z"/>
