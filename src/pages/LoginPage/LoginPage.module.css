@@ -1,0 +1,11 @@
+.hero_wrap {
+    margin-bottom: 16px;
+}
+.support_text{
+font-weight: 400;
+font-size: 14px;
+text-align: center;
+color: rgba(18, 20, 23, 0.8);
+margin-bottom: 43px;
+min-width: 283px;
+}

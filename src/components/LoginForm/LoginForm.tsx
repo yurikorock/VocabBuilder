@@ -5,14 +5,14 @@ import css from "./LoginForm.module.css";
 import { useEffect, useState, type JSX } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import { register as registerUser } from "../../redux/auth/operation";
+import { logIn } from "../../redux/auth/operation";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const schema = yup
   .object({
-    name: yup.string().required("Name is required"),
+   
     email: yup
       .string()
       .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "Invalid email format")
@@ -30,7 +30,7 @@ const schema = yup
   .required();
 
 interface FormData {
-  name: string;
+  
   email: string;
   password: string;
 }
@@ -50,12 +50,12 @@ export default function LoginForm(): JSX.Element {
     resolver: yupResolver(schema),
   });
 
-  const watchName = watch("name");
+  
   const watchEmail = watch("email");
   const watchPassword = watch("password");
 
   const onSubmit = (data: FormData) => {
-    dispatch(registerUser(data));
+    dispatch(logIn(data));
     console.log(data);
   };
 
@@ -77,15 +77,6 @@ export default function LoginForm(): JSX.Element {
       {/* /* ** FORM ** */}
       <form onSubmit={handleSubmit(onSubmit)} className={css.register_form}>
         <div className={css.input_wrap}>
-          <input
-            type="text"
-            placeholder="Name"
-            {...register("name")}
-            className={`${css.input_form} ${errors.name ? css.error : ""} ${
-              !errors.name && watchName ? css.correct : ""
-            }  `}
-          />
-          {errors.name && <p>{errors.name.message}</p>}
           <input
             type="email"
             placeholder="Email"
