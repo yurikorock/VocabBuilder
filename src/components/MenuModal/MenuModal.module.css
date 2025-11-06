@@ -1,10 +1,21 @@
+.menu_backdrop {
+    background-color: transparent;
+}
+
+.menu_modal {
+    width: 185px;
+    height: 812px;
+    background: var(--green);
+    padding: 16px 16px 0px 16px;
+}
+
 .user_bar_container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    align-self: flex-end;
-    margin-left: auto;
+   
+  
+   
 }
 
 .user_info {
@@ -20,14 +31,14 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 150%;
-    color: var(--black);
+    color: var(--white);
 }
 
 .icon_wrap {
     border-radius: 30px;
     width: 36px;
     height: 36px;
-    background: var(--green);
+    background: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,19 +47,23 @@
 .user_icon {
     width: 20px;
     height: 20px;
-    fill: rgba(252, 252, 252, 0.7);
+    fill: var(--green);
+    ;
 }
 
-.burger_btn {
+.close_btn {
     all: unset;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    margin-left: auto;
+  
 }
 
-.burger_icon {
+.close_icon {
     width: 32px;
-    height: 22px;
-    stroke: var(--black);
+    height: 32px;
+    stroke: currentColor;
+    fill: none;
 }

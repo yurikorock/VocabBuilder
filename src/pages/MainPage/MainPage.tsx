@@ -1,10 +1,10 @@
+import MenuModal from "../../components/MenuModal/MenuModal";
 
 
 export default function MainPage() {
   return (
     <>
-   
-      <p>Main Page</p>
+      <MenuModal/>
     </>
   );
 }

@@ -56,7 +56,7 @@ export default function RegistrationForm(): JSX.Element {
 
   const onSubmit = (data: FormData) => {
     dispatch(registerUser(data));
-    console.log(data);
+    // console.log(data);
   };
 
   // 👇 Коли користувач логіниться — редирект на Dictionary qwerty1

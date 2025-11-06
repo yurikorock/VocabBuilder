@@ -28,6 +28,7 @@ interface Credentials {
   email: string;
   password: string;
 }
+
 interface AuthResponse {
   token: string;
   name: string;
@@ -57,24 +58,6 @@ export const register = createAsyncThunk<
   }
 });
 
-/* LOGOUT
- * POST @ /users/logout
- * headers: Authorization: Bearer token
- */
-
-export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
-  "auth/logout",
-  async (_, thunkAPI) => {
-    try {
-      await axios.post("/users/signout");
-      // After a successful logout, remove the token from the HTTP header
-      clearAuthHeader();
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message || "Logout failed");
-    }
-  }
-);
-
 /* LOGIN
  * POST @ /users/login
  * body: { email, password }
@@ -100,6 +83,24 @@ export const logIn = createAsyncThunk<
     return thunkAPI.rejectWithValue(error.message || "Log in failed");
   }
 });
+
+/* LOGOUT
+ * POST @ /users/logout
+ * headers: Authorization: Bearer token
+ */
+
+export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
+  "auth/logout",
+  async (_, thunkAPI) => {
+    try {
+      await axios.post("/users/signout");
+      // After a successful logout, remove the token from the HTTP header
+      clearAuthHeader();
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Logout failed");
+    }
+  }
+);
 
 /* REFRESH
  * GET @ /users/current

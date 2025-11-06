@@ -30,7 +30,6 @@ const schema = yup
   .required();
 
 interface FormData {
-  
   email: string;
   password: string;
 }
