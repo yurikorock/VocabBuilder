@@ -30,7 +30,8 @@ interface Credentials {
 }
 interface AuthResponse {
   token: string;
-  user: User;
+  name: string;
+  email: string;
 }
 
 /* REGISTER
@@ -46,7 +47,7 @@ export const register = createAsyncThunk<
     const res = await axios.post<AuthResponse>("/users/signup", credentials);
     // After successful registration, add the token to the HTTP header
     setAuthHeader(res.data.token);
-    toast.success("Registration successful!");
+    toast.success("Registration successfull!");
     return res.data;
   } catch (error: any) {
     const message =
@@ -93,6 +94,7 @@ export const logIn = createAsyncThunk<
     const res = await axios.post<AuthResponse>("/users/signin", credentials);
     // After successful login, add the token to the HTTP header
     setAuthHeader(res.data.token);
+    toast.success("Your are logged in successfully!");
     return res.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error.message || "Log in failed");
@@ -104,7 +106,7 @@ export const logIn = createAsyncThunk<
  * headers: Authorization: Bearer token
  */
 export const refreshUser = createAsyncThunk<
-  AuthResponse,
+  User,
   void,
   { rejectValue: string; state: RootState }
 >("auth/refresh", async (_, thunkAPI) => {
@@ -119,7 +121,7 @@ export const refreshUser = createAsyncThunk<
   try {
     // If there is a token, add it to the HTTP header and perform the request
     setAuthHeader(persistedToken);
-    const res = await axios.get<AuthResponse>("/users/current");
+    const res = await axios.get<User>("/users/current");
     return res.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error.message || "Refresh failed");

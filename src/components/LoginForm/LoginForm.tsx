@@ -56,7 +56,7 @@ export default function LoginForm(): JSX.Element {
 
   const onSubmit = (data: FormData) => {
     dispatch(logIn(data));
-    console.log(data);
+    // console.log(data);
   };
 
   // 👇 Коли користувач логіниться — редирект на Dictionary qwerty1

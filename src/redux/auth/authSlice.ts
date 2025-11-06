@@ -1,7 +1,4 @@
-import {
-  createSlice,
-  type ActionReducerMapBuilder,
-} from "@reduxjs/toolkit";
+import { createSlice, type ActionReducerMapBuilder } from "@reduxjs/toolkit";
 import { logIn, logOut, refreshUser, register } from "./operation";
 
 interface User {
@@ -11,7 +8,7 @@ interface User {
 }
 
 interface AuthState {
-  user: User;
+  user: User | null;
   token: string | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;
@@ -34,12 +31,12 @@ const authSlice = createSlice({
   extraReducers: (builder: ActionReducerMapBuilder<AuthState>) => {
     builder
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        state.user = { name: action.payload.name, email: action.payload.email };
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
       .addCase(logIn.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        state.user = { name: action.payload.name, email: action.payload.email };
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
@@ -52,7 +49,7 @@ const authSlice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })

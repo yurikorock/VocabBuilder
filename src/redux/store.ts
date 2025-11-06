@@ -14,13 +14,17 @@ import {
 import authReducer from "./auth/authSlice";
 
 import storage from "redux-persist/lib/storage";
-import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
+import {
+  useDispatch,
+  useSelector,
+  type TypedUseSelectorHook,
+} from "react-redux";
 
 // Persisting token field from auth slice to localstorage
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["token"], // зберігаємо лише токен
+  whitelist: ["token", "isLoggedIn", "user"], // зберігаємо не лише токен
 };
 
 export const store = configureStore({
