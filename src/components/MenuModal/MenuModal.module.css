@@ -10,15 +10,15 @@
     padding: 16px 16px 0px 16px;
     position: absolute;
     left: 2px;
-   top: -436px;
-    
+    top: -436px;
+
 }
 
 .user_bar_container {
     display: flex;
     flex-direction: row;
     align-items: center;
-   margin-bottom: 166px;
+    margin-bottom: 166px;
 }
 
 .user_info {
@@ -61,7 +61,7 @@
     justify-content: center;
     cursor: pointer;
     margin-left: auto;
-  
+
 }
 
 .close_icon {
@@ -70,8 +70,93 @@
     stroke: currentColor;
     fill: none;
 }
-.navigation{
-display: flex;
-flex-direction: column;
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-bottom: 92px;
+
+}
+
+.nav_link {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--white);
+
+    transition: transform 0.3s ease, color 0.3s ease;
+
+}
+
+.nav_link:hover,
+.nav_link:focus {
+    transform: scale(1.1);
+    color: var(--white);
+}
+
+.isActive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 12px 20px;
+    background: var(--white);
+
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--black);
+
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.isActive:hover,
+.isActive:focus {
+    transform: scale(1.1);
+    color: var(--black);
+}
+
+.arrow_icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+}
+
+.btn_logout {
+    all: unset;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.btn_logout:hover,
+.btn_logout:focus {
+    transform: scale(1.1);
+    color: var(--white);
+}
+
+.illustration_wrapper {
+    position: absolute;
+    top: 500px;
+  left: 0; 
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.illustration {
+    width: 185px;
+    height: 318px;
 
 }

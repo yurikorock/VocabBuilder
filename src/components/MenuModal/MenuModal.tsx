@@ -12,8 +12,8 @@ interface MenuModalProps {
 export default function MenuModal({ onClose }: MenuModalProps): JSX.Element {
   const user = useAppSelector(selectUserName);
   const dispatch = useAppDispatch();
-  const navigate =  useNavigate();
- 
+  const navigate = useNavigate();
+
   const handleLogOut = async () => {
     await dispatch(logOut());
     onClose();
@@ -39,19 +39,53 @@ export default function MenuModal({ onClose }: MenuModalProps): JSX.Element {
           </button>
         </div>
         <nav className={css.navigation}>
-          <NavLink to={"dictionary"} onClick={onClose}>
+          <NavLink
+            to={"dictionary"}
+            onClick={onClose}
+            className={({ isActive }) =>
+              isActive ? css.isActive : css.nav_link
+            }
+          >
             Dictionary
           </NavLink>
-          <NavLink to={"recommend"} onClick={onClose}>
+          <NavLink
+            to={"recommend"}
+            onClick={onClose}
+            className={({ isActive }) =>
+              isActive ? css.isActive : css.nav_link
+            }
+          >
             Recommend
           </NavLink>
-          <NavLink to={"training"} onClick={onClose}>
+          <NavLink
+            to={"training"}
+            onClick={onClose}
+            className={({ isActive }) =>
+              isActive ? css.isActive : css.nav_link
+            }
+          >
             Training
           </NavLink>
-          <button type="button" onClick={handleLogOut}>
+          <button
+            type="button"
+            onClick={handleLogOut}
+            className={css.btn_logout}
+          >
             Log out
+            <svg className={css.arrow_icon} width="16" height="16">
+              <use href="/sprite.svg#icon-arrow-right"></use>
+            </svg>
           </button>
         </nav>
+        <div className={css.illustration_wrapper}>
+          <img
+            className={css.illustration}
+            src="/image/illustration-cut.svg"
+            width="185"
+            height="318"
+            alt="Illustration"
+          />
+        </div>
       </div>
     </div>
   );
