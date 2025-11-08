@@ -1,6 +1,6 @@
 //store.ts
 
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -10,6 +10,7 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
+  type PersistConfig,
 } from "redux-persist";
 import authReducer from "./auth/authSlice";
 
@@ -19,16 +20,35 @@ import {
   useSelector,
   type TypedUseSelectorHook,
 } from "react-redux";
+import modalReducer from "./modal/modalSlice";
+
+interface User {
+  _id?: string;
+  name: string | null;
+  email: string | null;
+}
+
+interface AuthState {
+  user: User | null;
+  token: string | null;
+  isLoggedIn: boolean;
+  isRefreshing: boolean;
+}
 
 // Persisting token field from auth slice to localstorage
-const authPersistConfig = {
+const authPersistConfig: PersistConfig<AuthState> = {
   key: "auth",
   storage,
   whitelist: ["token", "isLoggedIn", "user"], // зберігаємо не лише токен
 };
 
+// ----- Persisted reducer with correct generics -----
+const persistedAuthReducer = persistReducer<AuthState>(authPersistConfig, authReducer);
+
+const rootReducer = combineReducers({auth: persistedAuthReducer, modal: modalReducer});
+
 export const store = configureStore({
-  reducer: { auth: persistReducer(authPersistConfig, authReducer) },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

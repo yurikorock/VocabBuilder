@@ -1,5 +1,6 @@
 .menu_backdrop {
     background-color: transparent;
+    position: relative;
 }
 
 .menu_modal {
@@ -7,6 +8,10 @@
     height: 812px;
     background: var(--green);
     padding: 16px 16px 0px 16px;
+    position: absolute;
+    left: 2px;
+   top: -436px;
+    
 }
 
 .user_bar_container {
@@ -66,4 +71,9 @@
     height: 32px;
     stroke: currentColor;
     fill: none;
+}
+.navigation{
+display: flex;
+flex-direction: column;
+
 }
