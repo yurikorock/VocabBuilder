@@ -96,6 +96,7 @@ export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
       await axios.post("/users/signout");
       // After a successful logout, remove the token from the HTTP header
       clearAuthHeader();
+      toast.success("Your are logged out !");
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message || "Logout failed");
     }
