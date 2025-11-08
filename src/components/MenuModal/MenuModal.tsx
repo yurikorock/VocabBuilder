@@ -33,9 +33,9 @@ export default function MenuModal({ onClose }: MenuModalProps): JSX.Element {
           </button>
         </div>
         <nav className={css.navigation}>
-          <NavLink to={"dictionary"}>Dictionary</NavLink>
-          <NavLink to={"recommend"}>Recommend</NavLink>
-          <NavLink to={"training"}>Training</NavLink>
+          <NavLink to={"dictionary"} onClick={onClose}>Dictionary</NavLink>
+          <NavLink to={"recommend"} onClick={onClose}>Recommend</NavLink>
+          <NavLink to={"training"} onClick={onClose}>Training</NavLink>
         </nav>
       </div>
     </div>
