@@ -21,6 +21,7 @@ import {
   type TypedUseSelectorHook,
 } from "react-redux";
 import modalReducer from "./modal/modalSlice";
+import { wordsReducer } from "./words/wordsSlice";
 
 interface User {
   _id?: string;
@@ -43,9 +44,16 @@ const authPersistConfig: PersistConfig<AuthState> = {
 };
 
 // ----- Persisted reducer with correct generics -----
-const persistedAuthReducer = persistReducer<AuthState>(authPersistConfig, authReducer);
+const persistedAuthReducer = persistReducer<AuthState>(
+  authPersistConfig,
+  authReducer
+);
 
-const rootReducer = combineReducers({auth: persistedAuthReducer, modal: modalReducer});
+const rootReducer = combineReducers({
+  auth: persistedAuthReducer,
+  modal: modalReducer,
+  words: wordsReducer,
+});
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -62,5 +70,5 @@ export type AppDispatch = typeof store.dispatch;
 export const persistor = persistStore(store);
 
 // ✅ Типізовані хуки для TypeScript
-export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
