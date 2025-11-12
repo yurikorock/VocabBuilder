@@ -1,0 +1,109 @@
+.filter_words {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 375px;
+    width: 100%;
+    height: 48px;
+    background-color: transparent;
+
+    border: 1px solid rgba(18, 20, 23, 0.1);
+    border-radius: 15px;
+    padding: 12px 24px;
+    margin-bottom: 8px;
+
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--black);
+}
+
+.filter_words::placeholder {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--black);
+}
+
+:global(.custom-select__control) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 375px;
+    width: 100%;
+    height: 48px;
+    background-color: transparent;
+
+    border: 1px solid rgba(18, 20, 23, 0.1);
+    border-radius: 15px;
+    padding: 12px 24px;
+}
+
+:global(.custom-select__value-container) {
+    max-width: 275px;
+    width: 100%;
+}
+
+:global(.custom-select__placeholder) {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--black);
+}
+
+:global(.custom-select__menu) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 8px;
+
+    border-radius: 15px;
+    padding: 12px 24px;
+    width: 343px;
+
+
+    box-shadow: 0 4px 47px 0 rgba(18, 20, 23, 0.08);
+    background: #fff;
+}
+
+/* одиночний текст коли вже вибраний в селекті */
+:global(.custom-select__single-value) {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--black);
+}
+
+/* текст в випадаючому меню */
+:global(.custom-select__option) {
+    cursor: pointer;
+    color: rgba(18, 20, 23, 0.5);
+    transition: color 0.2s ease-in-out;
+}
+
+:global(.custom-select__option--is-focused) {
+    color: #121417;
+}
+
+:global(.custom-select__option--is-focused) {
+    color: #121417;
+}
+
+:global(.custom-select__indicator) {
+    color: #121417;
+    /* колір стрілки */
+    transform: rotate(0deg);
+    /* напрямок */
+    transition: transform 0.35s ease-in-out !important;
+}
+
+/* Коли меню відкрите — стрілка повертається */
+:global(.custom-select__control--menu-is-open .custom-select__indicator) {
+    transform: rotate(180deg);
+}
