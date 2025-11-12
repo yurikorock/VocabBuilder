@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectCategories } from "../../redux/words/selectors";
 import { fetchWordsCategories } from "../../redux/words/operation";
 
-
 export default function DashBoard(): JSX.Element {
   const dispath = useAppDispatch();
 
@@ -53,7 +52,7 @@ export default function DashBoard(): JSX.Element {
   return (
     <div className={css.container}>
       <input
-      className={css.filter_words}
+        className={css.filter_words}
         placeholder="Find the word"
         type="search"
         name="filterwords"
@@ -71,6 +70,18 @@ export default function DashBoard(): JSX.Element {
         onChange={(option) => setSelectedCategory(option)}
         classNamePrefix="custom-select"
       />
+      <div className={css.statistics}>
+        <h4 className={css.stat_title}>To study:</h4>
+        <p className={css.stat_number}>NN</p>
+      </div>
+      <div className={css.block_add_word}>
+        <button type="button" className={css.btn_add_word}>
+          Add word{" "}
+          <svg className={css.icon} width="20" height="20">
+            <use href="/sprite.svg#icon-plus"></use>
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }
