@@ -5,9 +5,11 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectCategories } from "../../redux/words/selectors";
 import { fetchWordsCategories } from "../../redux/words/operation";
 import { Link } from "react-router-dom";
+import { openModal } from "../../redux/modal/modalSlice";
 
 export default function DashBoard(): JSX.Element {
   const dispath = useAppDispatch();
+  const openAddWord =()=> dispath(openModal({type: "addWord"}));
 
   const [filter, setFilter] = useState("");
   const [debouncedFilter, setDebouncedFilter] = useState("");
@@ -80,11 +82,11 @@ export default function DashBoard(): JSX.Element {
           visibility: whatIsCategorySelected === "verb" ? "visible" : "hidden",
         }}
       >
-        <label>
+        <label className={css.checkbox_label}>
           <input type="radio" name="verbType" className={css.checkbox_verbs}/>
           Regular
         </label>
-        <label>
+        <label className={css.checkbox_label}>
           <input type="radio" name="verbType" className={css.checkbox_verbs}/>
           Irregular
         </label>
@@ -95,7 +97,7 @@ export default function DashBoard(): JSX.Element {
         <p className={css.stat_number}>NN</p>
       </div>
       <div className={css.block_add_word}>
-        <button type="button" className={css.btn_add_word}>
+        <button type="button" className={css.btn_add_word} onClick={openAddWord}>
           Add word
           <svg className={css.icon} width="20" height="20">
             <use href="/sprite.svg#icon-plus"></use>
@@ -108,6 +110,7 @@ export default function DashBoard(): JSX.Element {
           </svg>
         </Link>
       </div>
+      <div className={css.wordtable}>WordsTable</div>
     </div>
   );
 }

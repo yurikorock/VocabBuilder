@@ -4,6 +4,7 @@ import { selectIsModalOpen, selectModalType } from "../../redux/modal/selectors"
 import { closeModal } from "../../redux/modal/modalSlice";
 import MenuModal from "../MenuModal/MenuModal";
 import Modal from "../Modal/Modal";
+import AddWordModal from "../AddWordModal/AddWordModal";
 
 export default function ModalContainer():JSX.Element | null {
     const dispatch =  useAppDispatch();
@@ -16,6 +17,7 @@ export default function ModalContainer():JSX.Element | null {
   return (
     <Modal onClose={handleClose}>
       {modalType === "menu" && <MenuModal onClose = {handleClose}/>}
+      {modalType === "addWord" && <AddWordModal />}
     </Modal>
   );
 }

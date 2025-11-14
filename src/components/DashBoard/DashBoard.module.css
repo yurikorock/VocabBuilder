@@ -200,9 +200,25 @@
     gap: 16px;
 }
 
+.checkbox_label {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
 .checkbox_verbs {
     font-weight: 400;
     font-size: 12px;
     text-align: center;
     color: var(--black);
+
+
+}
+
+.wordtable {
+    background-color: beige;
+    width: 100%;
+    height: 563px;
+    max-width: 343px;
+
 }
