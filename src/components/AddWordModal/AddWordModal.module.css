@@ -1,0 +1,137 @@
+.addwords_modal_container {
+    border-radius: 15px;
+    background: var(--green);
+    max-width: 342px;
+    width: 100%;
+    padding: 48px 16px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.title_wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 117%;
+    letter-spacing: -0.02em;
+    color: var(--white);
+}
+
+.descr {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--white);
+}
+
+/* Це поле, яке ти бачиш у закритому стані.*/
+:global(.custom-select__control) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 311px;
+    width: 100%;
+    height: 48px;
+    background-color: transparent;
+    margin-bottom: 8px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 15px;
+    padding: 12px 24px;
+}
+
+/* Це текст Categories, коли нічого не обрано. */
+:global(.custom-select__placeholder) {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--white);
+}
+
+/* Це текст обраної категорії */
+:global(.custom-select__single-value) {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--white);
+}
+
+/* Тут знаходиться SVG-стрілка. */
+:global(.custom-select__dropdown-indicator) {
+    width: 20px;
+    height: 20px;
+    color: var(--white);
+}
+
+
+/* Меню (обгортка) */
+:global(.custom-select__menu) {
+    border-radius: 15px;
+    width: 350px;
+    height: 240px;
+
+    padding: 12px 18px 12px 24px !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    box-shadow: 0 4px 47px 0 rgba(18, 20, 23, 0.08);
+    background: #fff;
+}
+
+/* список в випадаючому меню */
+:global(.custom-select__menu-list) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    max-height: 216px !important;
+    width: 280px;
+    gap: 8px !important;
+    padding: 0px 18px 12px 0px !important;
+
+}
+
+/* ширина місце для скролу */
+:global(.custom-select__menu-list::-webkit-scrollbar) {
+    width: 8px !important;
+}
+
+/* трек */
+:global(.custom-select__menu-list::-webkit-scrollbar-track) {
+    background-color: transparent !important;
+    border-radius: 12px !important;
+}
+
+/* бігунок */
+:global(.custom-select__menu-list::-webkit-scrollbar-thumb) {
+    background: rgba(18, 20, 23, 0.3);
+    width: 8px !important;
+    height: 101px !important;
+    border-radius: 12px !important;
+}
+
+/* ховер по бігунку */
+:global(.custom-select__menu-list::-webkit-scrollbar-thumb:hover) {
+  background: rgba(18, 20, 23, 0.6);
+}
+
+/* текст в випадаючому меню */
+:global(.custom-select__option) {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: rgba(18, 20, 23, 0.5);
+}
+
+:global(.custom-select__option--is-focused) {
+    color: var(--green);
+}
