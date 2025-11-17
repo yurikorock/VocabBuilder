@@ -3,8 +3,27 @@ import Select from "react-select";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectCategories } from "../../redux/words/selectors";
 import { fetchWordsCategories } from "../../redux/words/operation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 import css from "./AddWordModal.module.css";
+
+const schema = yup.object({
+  ukrainian: yup
+    .string()
+    .matches(/^(?![A-Za-z])[А-ЯІЄЇҐґа-яієїʼ\s]+$/u, "Invalid text format")
+    .required("Text is required"),
+  english: yup
+    .string()
+    .matches(/\b[A-Za-z'-]+(?:\s+[A-Za-z'-]+)*\b/, "Invalid text format")
+    .required("Text is required"),
+});
+
+interface FormData {
+  ukrainian: string;
+  english: string;
+}
 
 export default function AddWordModal(): JSX.Element {
   const dispath = useAppDispatch();
@@ -12,6 +31,19 @@ export default function AddWordModal(): JSX.Element {
     value: string;
     label: string;
   } | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+
+  const watchUkrainian = watch("ukrainian");
+  const watchEnglish = watch("english");
 
   //Categories Redux
   const categories = useAppSelector(selectCategories);
@@ -22,13 +54,17 @@ export default function AddWordModal(): JSX.Element {
     dispath(fetchWordsCategories());
   }, [dispath]);
 
-   //перетворюємо масив  у потрібний для react-select формат.
+  //перетворюємо масив  у потрібний для react-select формат.
   const options = categories?.map((cat: string) => ({
     value: cat,
     label: cat[0].toUpperCase() + cat.slice(1),
   }));
 
   const whatIsCategorySelected = selectedCategory?.value;
+
+  const onSubmit = (data: FormData) => {
+    console.log("Form OK", data);
+  };
 
   return (
     <div className={css.addwords_modal_container}>
@@ -39,7 +75,7 @@ export default function AddWordModal(): JSX.Element {
           the language base and expanding the vocabulary.
         </p>
       </div>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Select
           options={options}
           placeholder="Categories"
@@ -49,7 +85,7 @@ export default function AddWordModal(): JSX.Element {
           value={selectedCategory}
           // onChange={(opt) => dispatch(setLevel(opt?.value || ""))}
           onChange={(option) => setSelectedCategory(option)}
-          classNamePrefix="custom-select"
+          classNamePrefix="custom-sel"
         />
 
         <div
@@ -75,6 +111,46 @@ export default function AddWordModal(): JSX.Element {
             />
             Irregular
           </label>
+        </div>
+        {/* *** BLOCK INPUT *** */}
+        <div className={css.input_block}>
+          <div className={css.input_wrap}>
+            <div className={css.input_title}>
+              <svg className={css.icon} width="28" height="28">
+                <use href="/public/sprite.svg#icon-ukraine"></use>
+              </svg>
+              <p>Ukrainian</p>
+            </div>
+            <input
+              type="text"
+              {...register("ukrainian")}
+              placeholder="enter text"
+              className={`${css.input_form} ${
+                errors.ukrainian ? css.error : ""
+              } ${!errors.ukrainian && watchUkrainian ? css.correct : ""}  `}
+            />
+            {errors.ukrainian && <p>{errors.ukrainian.message}</p>}
+             <div className={css.input_title}>
+              <svg className={css.icon} width="28" height="28">
+                <use href="/public/sprite.svg#icon-united-kingdom"></use>
+              </svg>
+              <p>English</p>
+            </div>
+            <input
+              type="text"
+              {...register("english")}
+              placeholder="enter text"
+              className={`${css.input_form} ${
+                errors.english ? css.error : ""
+              } ${!errors.english && watchEnglish ? css.correct : ""}  `}
+            />
+            {errors.english && <p>{errors.english.message}</p>}
+          </div>
+        </div>
+        {/* *** BLOCK BUTTONS *** */}
+        <div className={css.block_buttons}>
+          <button type="submit" className={css.btn_add}>Add</button>
+          <button type="button" className={css.btn_cnsl}>Cancel</button>
         </div>
       </form>
     </div>
