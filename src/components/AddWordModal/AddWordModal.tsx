@@ -25,7 +25,11 @@ interface FormData {
   english: string;
 }
 
-export default function AddWordModal(): JSX.Element {
+interface MenuModalProps {
+  onClose: () => void;
+}
+
+export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
   const dispath = useAppDispatch();
   const [selectedCategory, setSelectedCategory] = useState<{
     value: string;
@@ -68,6 +72,11 @@ export default function AddWordModal(): JSX.Element {
 
   return (
     <div className={css.addwords_modal_container}>
+      <button type="button" className={css.close_btn} onClick={onClose}>
+        <svg className={css.close_icon} width="32" height="22">
+          <use href="/sprite.svg#icon-close"></use>
+        </svg>
+      </button>
       <div className={css.title_wrap}>
         <h3 className={css.title}>Add word</h3>
         <p className={css.descr}>
@@ -130,7 +139,7 @@ export default function AddWordModal(): JSX.Element {
               } ${!errors.ukrainian && watchUkrainian ? css.correct : ""}  `}
             />
             {errors.ukrainian && <p>{errors.ukrainian.message}</p>}
-             <div className={css.input_title}>
+            <div className={css.input_title}>
               <svg className={css.icon} width="28" height="28">
                 <use href="/public/sprite.svg#icon-united-kingdom"></use>
               </svg>
@@ -149,8 +158,12 @@ export default function AddWordModal(): JSX.Element {
         </div>
         {/* *** BLOCK BUTTONS *** */}
         <div className={css.block_buttons}>
-          <button type="submit" className={css.btn_add}>Add</button>
-          <button type="button" className={css.btn_cnsl}>Cancel</button>
+          <button type="submit" className={css.btn_add}>
+            Add
+          </button>
+          <button type="button" className={css.btn_cnsl} onClick={onClose}>
+            Cancel
+          </button>
         </div>
       </form>
     </div>

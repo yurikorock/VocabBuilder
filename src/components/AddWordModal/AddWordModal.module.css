@@ -3,11 +3,29 @@
     background: var(--green);
     max-width: 342px;
     width: 100%;
-    padding: 48px 16px;
+    padding: 16px 16px 48px 16px;
 
     display: flex;
     flex-direction: column;
 }
+.close_btn {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: auto;
+    margin-bottom: 8px;
+
+}
+
+.close_icon {
+    width: 32px;
+    height: 32px;
+    stroke: currentColor;
+    fill: none;
+}
+
 
 .title_wrap {
     display: flex;

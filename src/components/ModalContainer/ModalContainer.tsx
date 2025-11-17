@@ -17,7 +17,7 @@ export default function ModalContainer():JSX.Element | null {
   return (
     <Modal onClose={handleClose}>
       {modalType === "menu" && <MenuModal onClose = {handleClose}/>}
-      {modalType === "addWord" && <AddWordModal />}
+      {modalType === "addWord" && <AddWordModal onClose = {handleClose} />}
     </Modal>
   );
 }
