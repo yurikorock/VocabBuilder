@@ -6,6 +6,7 @@ import { selectCategories } from "../../redux/words/selectors";
 import { fetchWordsCategories } from "../../redux/words/operation";
 import { Link } from "react-router-dom";
 import { openModal } from "../../redux/modal/modalSlice";
+import WordsTable from "../WordsTable/WordsTable";
 
 export default function DashBoard(): JSX.Element {
   const dispath = useAppDispatch();
@@ -110,7 +111,8 @@ export default function DashBoard(): JSX.Element {
           </svg>
         </Link>
       </div>
-      <div className={css.wordtable}>WordsTable</div>
+      {/* <div className={css.wordtable}>WordsTable</div> */}
+      <WordsTable/>
     </div>
   );
 }
