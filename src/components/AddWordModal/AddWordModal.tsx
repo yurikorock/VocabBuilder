@@ -18,32 +18,42 @@ const schema = yup.object({
     .string()
     .matches(/\b[A-Za-z'-]+(?:\s+[A-Za-z'-]+)*\b/, "Invalid text format")
     .required("Text is required"),
+  category: yup.string().required("Category is required"),
+  verbType: yup
+    .mixed<"regular" | "irregular">()
+    .oneOf(["regular", "irregular"])
+    .nullable()
+    .default(null),
 });
 
-interface FormData {
-  ukrainian: string;
-  english: string;
-}
+// interface FormData {
+//   ukrainian: string;
+//   english: string;
+//   category: string;
+//   verbType: string | undefined;
+// }
+type FormData = yup.InferType<typeof schema>;
+type Option = { value: string; label: string };
 
 interface MenuModalProps {
   onClose: () => void;
 }
 
 export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
-  const dispath = useAppDispatch();
-  const [selectedCategory, setSelectedCategory] = useState<{
-    value: string;
-    label: string;
-  } | null>(null);
+  const dispatch = useAppDispatch();
+  const [selectedCategory, setSelectedCategory] = useState<Option | null>(null);
 
   const {
     register,
     handleSubmit,
+    setValue,
     reset,
     watch,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
+    defaultValues: { verbType: null }, // optional: keeps types aligned
+    mode: "onChange",
   });
 
   const watchUkrainian = watch("ukrainian");
@@ -55,11 +65,11 @@ export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
   // ✅ Отримуємо категорії з бекенда при першому рендері
 
   useEffect(() => {
-    dispath(fetchWordsCategories());
-  }, [dispath]);
+    dispatch(fetchWordsCategories());
+  }, [dispatch]);
 
   //перетворюємо масив  у потрібний для react-select формат.
-  const options = categories?.map((cat: string) => ({
+  const options: Option[] = (categories ?? []).map((cat: string) => ({
     value: cat,
     label: cat[0].toUpperCase() + cat.slice(1),
   }));
@@ -93,7 +103,13 @@ export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
           isSearchable={false} // вимикаємо інпут повністю
           value={selectedCategory}
           // onChange={(opt) => dispatch(setLevel(opt?.value || ""))}
-          onChange={(option) => setSelectedCategory(option)}
+          onChange={(option) => {
+            setSelectedCategory(option as Option | null);
+            const v = (option as Option | null)?.value ?? "";
+            setValue("category", v, { shouldValidate: true });
+            if (v !== "verb")
+              setValue("verbType", null, { shouldValidate: true });
+          }}
           classNamePrefix="custom-sel"
         />
 
@@ -107,7 +123,8 @@ export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
           <label className={css.checkbox_label}>
             <input
               type="radio"
-              name="verbType"
+              value="regular"
+              {...register("verbType")}
               className={css.checkbox_verbs}
             />
             Regular
@@ -115,7 +132,8 @@ export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
           <label className={css.checkbox_label}>
             <input
               type="radio"
-              name="verbType"
+              value="irregular"
+              {...register("verbType")}
               className={css.checkbox_verbs}
             />
             Irregular
@@ -126,7 +144,7 @@ export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
           <div className={css.input_wrap}>
             <div className={css.input_title}>
               <svg className={css.icon} width="28" height="28">
-                <use href="/public/sprite.svg#icon-ukraine"></use>
+                <use href="/sprite.svg#icon-ukraine"></use>
               </svg>
               <p>Ukrainian</p>
             </div>
@@ -141,7 +159,7 @@ export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
             {errors.ukrainian && <p>{errors.ukrainian.message}</p>}
             <div className={css.input_title}>
               <svg className={css.icon} width="28" height="28">
-                <use href="/public/sprite.svg#icon-united-kingdom"></use>
+                <use href="/sprite.svg#icon-united-kingdom"></use>
               </svg>
               <p>English</p>
             </div>

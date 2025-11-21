@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchWordsCategories } from "./operation";
+import { addOwnWordsTable, fetchWordsCategories } from "./operation";
 
 interface WordState {
   categories: string[];
+  words: any[];
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: WordState = {
   categories: [],
+  words: [],
   isLoading: false,
   error: null,
 };
@@ -30,7 +32,18 @@ const wordsSlice = createSlice({
       .addCase(fetchWordsCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
-      });
+      })
+      // ➕ додавання нового власного слова
+      .addCase(addOwnWordsTable.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      }).addCase(addOwnWordsTable.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.words.push(action.payload);
+      }).addCase(addOwnWordsTable.rejected, (state, action)=>{
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
   },
 });
 export const wordsReducer = wordsSlice.reducer;
