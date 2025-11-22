@@ -34,19 +34,6 @@ export default function DashBoard(): JSX.Element {
     dispatch(fetchWordsCategories());
   }, [dispatch]);
 
-  // Дебаунс фільтра
-  //   useEffect(() => {
-  //     const handler = setTimeout(() => {
-  //       const trimmed = filter.trim();
-  //       if (trimmed !== "") {
-  //         setDebouncedFilter(trimmed);
-  //       } else {
-  //         setDebouncedFilter("");
-  //       }
-  //     }, 300);
-  //     return () => clearTimeout(handler);
-  //   }, [filter]);
-
   useEffect(() => {
     const t = setTimeout(() => setDebouncedFilter(filter.trim()), 300);
     return () => clearTimeout(t);
@@ -57,19 +44,6 @@ export default function DashBoard(): JSX.Element {
     setPage(1);
   }, [debouncedFilter, selectedCategory, verbType]);
 
-  // Тут треба зробити запит
-  //   useEffect(() => {
-  //     if (!debouncedFilter && !selectedCategory && !verbType) return;
-  //     const params = {
-  //       category: selectedCategory?.value || "all",
-  //       verbType: selectedCategory?.value === "verb" ? verbType || null : null,
-  //       search: debouncedFilter,
-  //     };
-  //     console.log("Query params", params);
-
-  //     dispatch(resetWords());
-  //     dispatch(getWordsAll(params));
-  //   }, [debouncedFilter, selectedCategory, verbType]);
   useEffect(() => {
     // Build safe params for thunk
     const _category = selectedCategory?.value || "all";

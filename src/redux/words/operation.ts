@@ -86,8 +86,8 @@ export const getWordsAll = createAsyncThunk<
       query.verbType = params.verbType; // "regular" | "irregular"
     }
     if (params.keyword?.trim()) {
-      // NOTE: if API expects 'query' or 'keyword', rename here
-      query.search = params.keyword.trim();
+     
+      query.keyword = params.keyword.trim();
     }
 
       // Pagination (backend requires these)
