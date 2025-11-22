@@ -21,6 +21,10 @@ export default function DashBoard(): JSX.Element {
   } | null>(null);
   const [verbType, setVerbType] = useState<"regular" | "irregular" | "">("");
 
+  // Simple pagination state (optional)
+  const [page, setPage] = useState(1);
+  const [limit] = useState(7); // to match your swagger example
+
   //Categories Redux
   const categories = useAppSelector(selectCategories);
 
@@ -31,31 +35,64 @@ export default function DashBoard(): JSX.Element {
   }, [dispatch]);
 
   // Дебаунс фільтра
+  //   useEffect(() => {
+  //     const handler = setTimeout(() => {
+  //       const trimmed = filter.trim();
+  //       if (trimmed !== "") {
+  //         setDebouncedFilter(trimmed);
+  //       } else {
+  //         setDebouncedFilter("");
+  //       }
+  //     }, 300);
+  //     return () => clearTimeout(handler);
+  //   }, [filter]);
+
   useEffect(() => {
-    const handler = setTimeout(() => {
-      const trimmed = filter.trim();
-      if (trimmed !== "") {
-        setDebouncedFilter(trimmed);
-      } else {
-        setDebouncedFilter("");
-      }
-    }, 300);
-    return () => clearTimeout(handler);
+    const t = setTimeout(() => setDebouncedFilter(filter.trim()), 300);
+    return () => clearTimeout(t);
   }, [filter]);
 
-  // Тут треба зробити запит
+  // Reset page on any filter change
   useEffect(() => {
-    if (!debouncedFilter && !selectedCategory && !verbType) return;
-    const params = {
-      category: selectedCategory?.value || "all",
-      verbType: selectedCategory?.value === "verb" ? verbType : null,
-      search: debouncedFilter,
-    };
-    console.log("Query params", params);
+    setPage(1);
+  }, [debouncedFilter, selectedCategory, verbType]);
+
+  // Тут треба зробити запит
+  //   useEffect(() => {
+  //     if (!debouncedFilter && !selectedCategory && !verbType) return;
+  //     const params = {
+  //       category: selectedCategory?.value || "all",
+  //       verbType: selectedCategory?.value === "verb" ? verbType || null : null,
+  //       search: debouncedFilter,
+  //     };
+  //     console.log("Query params", params);
+
+  //     dispatch(resetWords());
+  //     dispatch(getWordsAll(params));
+  //   }, [debouncedFilter, selectedCategory, verbType]);
+  useEffect(() => {
+    // Build safe params for thunk
+    const _category = selectedCategory?.value || "all";
+    const _verbType =
+      _category === "verb"
+        ? ((verbType || null) as "regular" | "irregular" | null)
+        : null;
+
+    // Keyword must be passed as 'keyword'
+    const _keyword = debouncedFilter || "";
 
     dispatch(resetWords());
-    dispatch(getWordsAll(params));
-  }, [debouncedFilter, selectedCategory, verbType]);
+    dispatch(
+      getWordsAll({
+        category: _category,
+        verbType: _verbType,
+        keyword: _keyword, 
+        page,
+        limit,
+      })
+    );
+  }, [debouncedFilter, selectedCategory, verbType, page, limit, dispatch]);
+
   //перетворюємо масив  у потрібний для react-select формат.
   const options = categories?.map((cat: string) => ({
     value: cat,
@@ -82,7 +119,11 @@ export default function DashBoard(): JSX.Element {
         isSearchable={false} // вимикаємо інпут повністю
         value={selectedCategory}
         // onChange={(opt) => dispatch(setLevel(opt?.value || ""))}
-        onChange={(option) => setSelectedCategory(option)}
+        onChange={(option) => {
+          setSelectedCategory(option);
+          const v = (option as { value: string } | null)?.value ?? "";
+          if (v !== "verb") setVerbType(""); //reset to empty when not verb
+        }}
         classNamePrefix="custom-select"
       />
 

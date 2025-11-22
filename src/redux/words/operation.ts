@@ -58,16 +58,18 @@ export const addOwnWordsTable = createAsyncThunk(
 );
 
 export interface WordsQuery {
-  category: string;
-  verbType: string | null;
-  search: string;
+  category?: string; // optional
+  verbType?: "regular" | "irregular" | null; // optional
+  keyword?: string;
+  page?: number;
+  limit?: number;
 }
 
 export const getWordsAll = createAsyncThunk<
   WordsResponse,
   WordsQuery,
   { state: RootState }
->("words/getWordsAll", async (_, thunkAPI) => {
+>("words/getWordsAll", async (params, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
 
@@ -75,8 +77,27 @@ export const getWordsAll = createAsyncThunk<
       return thunkAPI.rejectWithValue("No token found");
     }
     setAuthHeader(token);
-    const res = await axios.get<WordsResponse>("/words/all");
-     console.log("🔥 BACKEND RESPONSE:", res.data);
+
+    const query: Record<string, string | number> = {};
+    if (params.category && params.category !== "all") {
+      query.category = params.category;
+    }
+    if (params.verbType && params.category === "verb") {
+      query.verbType = params.verbType; // "regular" | "irregular"
+    }
+    if (params.keyword?.trim()) {
+      // NOTE: if API expects 'query' or 'keyword', rename here
+      query.search = params.keyword.trim();
+    }
+
+      // Pagination (backend requires these)
+    query.page = params.page ?? 1;
+    query.limit = params.limit ?? 7; // pick your default
+
+    const res = await axios.get<WordsResponse>("/words/all", {
+      params: query,
+    });
+    console.log("🔥 BACKEND RESPONSE:", res.data);
     return res.data as WordsResponse;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
