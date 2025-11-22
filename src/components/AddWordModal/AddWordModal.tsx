@@ -47,7 +47,6 @@ export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
     register,
     handleSubmit,
     setValue,
-    reset,
     watch,
     formState: { errors },
   } = useForm<FormData>({
