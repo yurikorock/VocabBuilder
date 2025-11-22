@@ -5,11 +5,18 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { columnDef } from "./columns.ts";
-import mData from "./data.json";
+
 import css from "./WordsTable.module.css";
+import { useAppSelector } from "../../redux/store.ts";
+import {
+  selectWords,
+  selectWordsLoading,
+} from "../../redux/words/selectors.ts";
 
 export default function WordsTable(): JSX.Element {
-  const data = useMemo(() => mData, []);
+  const words = useAppSelector(selectWords);
+  const isLoading = useAppSelector(selectWordsLoading);
+  const data = useMemo(() => words, [words]);
 
   const table = useReactTable({
     columns: columnDef,
@@ -19,6 +26,7 @@ export default function WordsTable(): JSX.Element {
 
   return (
     <div className={css.container_word_table}>
+      {isLoading && <p>Loading...</p>}
       <table>
         <thead>
           {/* // name of columns header // */}
