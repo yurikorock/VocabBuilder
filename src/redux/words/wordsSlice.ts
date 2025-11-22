@@ -1,9 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addOwnWordsTable, fetchWordsCategories } from "./operation";
+import {
+  addOwnWordsTable,
+  fetchWordsCategories,
+  getWordsAll,
+} from "./operation";
+import type { Word } from "./types";
+
 
 interface WordState {
   categories: string[];
-  words: any[];
+  words: Word[];
+  page: number;
+  totalPages: number;
+  perPage: number;
+  hasMore: boolean;
   isLoading: boolean;
   error: string | null;
 }
@@ -11,6 +21,10 @@ interface WordState {
 const initialState: WordState = {
   categories: [],
   words: [],
+  page: 1,
+  totalPages: 1,
+  perPage: 7,
+  hasMore: false,
   isLoading: false,
   error: null,
 };
@@ -18,7 +32,14 @@ const initialState: WordState = {
 const wordsSlice = createSlice({
   name: "words",
   initialState,
-  reducers: {},
+  reducers: {
+    resetWords(state) {
+      state.words = [];
+      state.page = 1;
+      state.totalPages = 1;
+      state.hasMore = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchWordsCategories.pending, (state) => {
@@ -37,13 +58,40 @@ const wordsSlice = createSlice({
       .addCase(addOwnWordsTable.pending, (state) => {
         state.isLoading = true;
         state.error = null;
-      }).addCase(addOwnWordsTable.fulfilled, (state, action) => {
+      })
+      .addCase(addOwnWordsTable.fulfilled, (state, action) => {
         state.isLoading = false;
         state.words.push(action.payload);
-      }).addCase(addOwnWordsTable.rejected, (state, action)=>{
+      })
+      .addCase(addOwnWordsTable.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
+      // ➕ отримання всіх слів
+      .addCase(getWordsAll.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getWordsAll.fulfilled, (state, action) => {
+        const payload = action.payload;
+        state.isLoading = false;
+
+        if (payload.page === 1) {
+          state.words = payload.results;
+        } else {
+          state.words = [...state.words, ...payload.results];
+        }
+        state.page = payload.page;
+        state.totalPages = payload.totalPages;
+        state.perPage = payload.perPage;
+
+        state.hasMore = payload.page < payload.totalPages;
+      })
+      .addCase(getWordsAll.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
   },
 });
+export const { resetWords } = wordsSlice.actions;
 export const wordsReducer = wordsSlice.reducer;

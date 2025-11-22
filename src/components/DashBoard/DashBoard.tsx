@@ -3,14 +3,15 @@ import Select from "react-select";
 import css from "./DashBoard.module.css";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectCategories } from "../../redux/words/selectors";
-import { fetchWordsCategories } from "../../redux/words/operation";
+import { fetchWordsCategories, getWordsAll } from "../../redux/words/operation";
 import { Link } from "react-router-dom";
 import { openModal } from "../../redux/modal/modalSlice";
 import WordsTable from "../WordsTable/WordsTable";
+import { resetWords } from "../../redux/words/wordsSlice";
 
 export default function DashBoard(): JSX.Element {
-  const dispath = useAppDispatch();
-  const openAddWord =()=> dispath(openModal({type: "addWord"}));
+  const dispatch = useAppDispatch();
+  const openAddWord = () => dispatch(openModal({ type: "addWord" }));
 
   const [filter, setFilter] = useState("");
   const [debouncedFilter, setDebouncedFilter] = useState("");
@@ -18,17 +19,18 @@ export default function DashBoard(): JSX.Element {
     value: string;
     label: string;
   } | null>(null);
+  const [verbType, setVerbType] = useState<"regular" | "irregular" | "">("");
 
   //Categories Redux
   const categories = useAppSelector(selectCategories);
 
-  // ✅ Отримуємо категорії з бекенда при першому рендері
+  // Отримуємо категорії з бекенда при першому рендері
 
   useEffect(() => {
-    dispath(fetchWordsCategories());
-  }, [dispath]);
+    dispatch(fetchWordsCategories());
+  }, [dispatch]);
 
-  // ✅ Дебаунс фільтра
+  // Дебаунс фільтра
   useEffect(() => {
     const handler = setTimeout(() => {
       const trimmed = filter.trim();
@@ -41,12 +43,19 @@ export default function DashBoard(): JSX.Element {
     return () => clearTimeout(handler);
   }, [filter]);
 
-  // Тут треба зробити запит або фільтрацію за debouncedFilter
+  // Тут треба зробити запит
   useEffect(() => {
-    if (debouncedFilter) {
-      console.log("Запит за:", debouncedFilter);
-    }
-  }, [debouncedFilter]);
+    if (!debouncedFilter && !selectedCategory && !verbType) return;
+    const params = {
+      category: selectedCategory?.value || "all",
+      verbType: selectedCategory?.value === "verb" ? verbType : null,
+      search: debouncedFilter,
+    };
+    console.log("Query params", params);
+
+    dispatch(resetWords());
+    dispatch(getWordsAll(params));
+  }, [debouncedFilter, selectedCategory, verbType]);
   //перетворюємо масив  у потрібний для react-select формат.
   const options = categories?.map((cat: string) => ({
     value: cat,
@@ -84,11 +93,23 @@ export default function DashBoard(): JSX.Element {
         }}
       >
         <label className={css.checkbox_label}>
-          <input type="radio" name="verbType" className={css.checkbox_verbs}/>
+          <input
+            type="radio"
+            name="verbType"
+            value="regular"
+            onChange={() => setVerbType("regular")}
+            className={css.checkbox_verbs}
+          />
           Regular
         </label>
         <label className={css.checkbox_label}>
-          <input type="radio" name="verbType" className={css.checkbox_verbs}/>
+          <input
+            type="radio"
+            name="verbType"
+            value="irregular"
+            onChange={() => setVerbType("irregular")}
+            className={css.checkbox_verbs}
+          />
           Irregular
         </label>
       </div>
@@ -98,7 +119,11 @@ export default function DashBoard(): JSX.Element {
         <p className={css.stat_number}>NN</p>
       </div>
       <div className={css.block_add_word}>
-        <button type="button" className={css.btn_add_word} onClick={openAddWord}>
+        <button
+          type="button"
+          className={css.btn_add_word}
+          onClick={openAddWord}
+        >
           Add word
           <svg className={css.icon} width="20" height="20">
             <use href="/sprite.svg#icon-plus"></use>
@@ -111,8 +136,7 @@ export default function DashBoard(): JSX.Element {
           </svg>
         </Link>
       </div>
-      {/* <div className={css.wordtable}>WordsTable</div> */}
-      <WordsTable/>
+      <WordsTable />
     </div>
   );
 }

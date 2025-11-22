@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-
+import type { WordsResponse } from "./types";
 
 axios.defaults.baseURL = "https://vocab-builder-backend.p.goit.global/api";
 
@@ -56,3 +56,33 @@ export const addOwnWordsTable = createAsyncThunk(
     }
   }
 );
+
+export interface WordsQuery {
+  category: string;
+  verbType: string | null;
+  search: string;
+}
+
+export const getWordsAll = createAsyncThunk<
+  WordsResponse,
+  WordsQuery,
+  { state: RootState }
+>("words/getWordsAll", async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.token;
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("No token found");
+    }
+    setAuthHeader(token);
+    const res = await axios.get<WordsResponse>("/words/all");
+     console.log("🔥 BACKEND RESPONSE:", res.data);
+    return res.data as WordsResponse;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.data?.message ||
+        error.message ||
+        "Bad request (invalid request body)"
+    );
+  }
+});
