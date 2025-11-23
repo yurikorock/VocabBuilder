@@ -2,16 +2,17 @@ import { useEffect, useState, type JSX } from "react";
 import Select from "react-select";
 import css from "./DashBoard.module.css";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { selectCategories } from "../../redux/words/selectors";
+import { selectCategories, selectWordsPage } from "../../redux/words/selectors";
 import { fetchWordsCategories, getWordsAll } from "../../redux/words/operation";
 import { Link } from "react-router-dom";
 import { openModal } from "../../redux/modal/modalSlice";
 import WordsTable from "../WordsTable/WordsTable";
-import { resetWords } from "../../redux/words/wordsSlice";
+import { resetWords, setPage } from "../../redux/words/wordsSlice";
 
 export default function DashBoard(): JSX.Element {
   const dispatch = useAppDispatch();
   const openAddWord = () => dispatch(openModal({ type: "addWord" }));
+  const page = useAppSelector(selectWordsPage);
 
   const [filter, setFilter] = useState("");
   const [debouncedFilter, setDebouncedFilter] = useState("");
@@ -22,7 +23,7 @@ export default function DashBoard(): JSX.Element {
   const [verbType, setVerbType] = useState<"regular" | "irregular" | "">("");
 
   // Simple pagination state (optional)
-  const [page, setPage] = useState(1);
+
   const [limit] = useState(7); // to match your swagger example
 
   //Categories Redux
@@ -40,9 +41,13 @@ export default function DashBoard(): JSX.Element {
   }, [filter]);
 
   // Reset page on any filter change
+  //   useEffect(() => {
+  //     setPage(1);
+  //   }, [debouncedFilter, selectedCategory, verbType]);
   useEffect(() => {
-    setPage(1);
-  }, [debouncedFilter, selectedCategory, verbType]);
+  dispatch(setPage(1)); // reset page
+  dispatch(resetWords());
+}, [debouncedFilter, selectedCategory, verbType, dispatch]);
 
   useEffect(() => {
     // Build safe params for thunk
@@ -55,12 +60,12 @@ export default function DashBoard(): JSX.Element {
     // Keyword must be passed as 'keyword'
     const _keyword = debouncedFilter || "";
 
-    dispatch(resetWords());
+  
     dispatch(
       getWordsAll({
         category: _category,
         verbType: _verbType,
-        keyword: _keyword, 
+        keyword: _keyword,
         page,
         limit,
       })

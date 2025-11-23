@@ -39,6 +39,9 @@ const wordsSlice = createSlice({
       state.totalPages = 1;
       state.hasMore = false;
     },
+    setPage(state, action){
+        state.page = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -93,5 +96,5 @@ const wordsSlice = createSlice({
       });
   },
 });
-export const { resetWords } = wordsSlice.actions;
+export const { resetWords, setPage } = wordsSlice.actions;
 export const wordsReducer = wordsSlice.reducer;

@@ -9,3 +9,4 @@ export const selectWords = (state:RootState) => state.words.words;
 export const selectWordsLoading = (state: RootState) => state.words.isLoading;
 export const selectWordsHasMore = (state: RootState) => state.words.hasMore;
 export const selectWordsPage = (state: RootState) => state.words.page;
+export const selectWordsTotalPage = (state: RootState) => state.words.totalPages;

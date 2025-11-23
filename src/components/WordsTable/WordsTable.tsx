@@ -7,17 +7,23 @@ import {
 import { columnDef } from "./columns.ts";
 
 import css from "./WordsTable.module.css";
-import { useAppSelector } from "../../redux/store.ts";
+import { useAppDispatch, useAppSelector } from "../../redux/store.ts";
 import {
   selectWords,
   selectWordsLoading,
+  selectWordsPage,
+  selectWordsTotalPage,
 } from "../../redux/words/selectors.ts";
+import { setPage } from "../../redux/words/wordsSlice.ts";
 
 export default function WordsTable(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const words = useAppSelector(selectWords);
   const isLoading = useAppSelector(selectWordsLoading);
   const data = useMemo(() => words, [words]);
-
+  const page = useAppSelector(selectWordsPage);
+  const totalPage = useAppSelector(selectWordsTotalPage);
   const table = useReactTable({
     columns: columnDef,
     data,
@@ -57,19 +63,15 @@ export default function WordsTable(): JSX.Element {
           ))}
         </tbody>
       </table>
+      <button disabled={page === 1} onClick={() => dispatch(setPage(page - 1))}>
+        First page
+      </button>
+      <button
+        disabled={page === totalPage}
+        onClick={() => dispatch(setPage(page + 1))}
+      >
+        Next
+      </button>
     </div>
   );
-}
-
-{
-  /* <thead>
-          <tr>
-            <th>ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-          </tr>
-        </tbody> */
 }
