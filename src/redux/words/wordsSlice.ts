@@ -6,7 +6,6 @@ import {
 } from "./operation";
 import type { Word } from "./types";
 
-
 interface WordState {
   categories: string[];
   words: Word[];
@@ -39,9 +38,9 @@ const wordsSlice = createSlice({
       state.totalPages = 1;
       state.hasMore = false;
     },
-    setPage(state, action){
-        state.page = action.payload;
-    }
+    setPage(state, action) {
+      state.page = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -79,11 +78,8 @@ const wordsSlice = createSlice({
         const payload = action.payload;
         state.isLoading = false;
 
-        if (payload.page === 1) {
-          state.words = payload.results;
-        } else {
-          state.words = [...state.words, ...payload.results];
-        }
+        state.words = payload.results;
+
         state.page = payload.page;
         state.totalPages = payload.totalPages;
         state.perPage = payload.perPage;
