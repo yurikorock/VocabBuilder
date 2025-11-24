@@ -16,6 +16,6 @@ export const columnDef = [
   },
   {
     accessorKey: "_id",
-    header: "Null",
+    header: "",
   },
 ];
