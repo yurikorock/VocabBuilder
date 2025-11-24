@@ -34,7 +34,7 @@ export default function WordsTable(): JSX.Element {
   return (
     <div className={css.container_word_table}>
       {isLoading && <p>Loading...</p>}
-      <table>
+      <table className={css.table}>
         <thead>
           {/* // name of columns header // */}
           {table.getHeaderGroups().map((headerGroup) => (

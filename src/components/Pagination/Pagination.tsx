@@ -13,29 +13,51 @@ export default function Pagination({
   totalPages,
 }: PaginationProps): JSX.Element {
   const dispatch = useAppDispatch();
-  
+
   const getPageNumbers = () => {
-     const pages: (number | string)[] = [];
+    const pages: (number | string)[] = [];
+
+    // Перша сторінка завжди
+    pages.push(1);
+
     if (totalPages < 5) {
-      for (let i = 1; i < totalPages; i++) pages.push(i);
+      // Якщо сторінок мало, показуємо всі
+      for (let i = 2; i <= totalPages; i++) pages.push(i);
     } else {
-      pages.push(1);
-      if (page > 3) pages.push("...");
-      const start = Math.max(2, page - 1);
-      const end = Math.min(totalPages - 1, page + 1);
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (page < totalPages - 2) pages.push("..."); // крапки після поточної
-      pages.push(totalPages); // остання сторінка
+      // Якщо поточна сторінка близько до початку
+      if (page <= 2) {
+        pages.push(2, "...");
+      }
+      // // Якщо поточна сторінка посередині
+      else if (page > 2 && page < totalPages - 2) {
+        pages.push(page, "...");
+      }
+      // Якщо поточна сторінка ближче до кінця
+      else {
+        pages.push(totalPages - 1, "...");
+      }
+
+      // Остання сторінка завжди
+      pages.push(totalPages);
     }
+
     return pages;
   };
   const pages = getPageNumbers();
   return (
     <div className={css.container_pagination}>
-      <button disabled={page === 1} onClick={() => dispatch(setPage(1))}>
+      <button
+        className={page === 1 ? css.disabled : css.normal}
+        disabled={page === 1}
+        onClick={() => dispatch(setPage(1))}
+      >
         {"<<"}
       </button>
-      <button disabled={page === 1} onClick={() => dispatch(setPage(page - 1))}>
+      <button
+        className={page === 1 ? css.disabled : css.normal}
+        disabled={page === 1}
+        onClick={() => dispatch(setPage(page - 1))}
+      >
         {"<"}
       </button>
 
@@ -43,25 +65,27 @@ export default function Pagination({
         typeof p === "number" ? (
           <button
             key={idx}
-            className={p === page ? css.active : ""}
+            className={p === page ? css.active : css.normal}
             onClick={() => dispatch(setPage(p))}
           >
             {p}
           </button>
         ) : (
-          <span key={idx} className={css.dots}>
+          <span key={idx} className={css.normal}>
             {p}
           </span>
         )
       )}
 
       <button
+        className={page === totalPages ? css.disabled : css.normal}
         onClick={() => dispatch(setPage(page + 1))}
         disabled={page === totalPages}
       >
         {">"}
       </button>
       <button
+        className={page === totalPages ? css.disabled : css.normal}
         onClick={() => dispatch(setPage(totalPages))}
         disabled={page === totalPages}
       >
