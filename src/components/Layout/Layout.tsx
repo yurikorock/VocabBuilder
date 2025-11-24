@@ -9,7 +9,7 @@ export default function Layout(): JSX.Element {
   return (
     <>
       <Header />
-      <main className={css.main_container}>
+      <main className={css.layout_container}>
         <Outlet />
       </main>
       <ModalContainer />

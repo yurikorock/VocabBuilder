@@ -58,7 +58,7 @@ export default function LoginForm(): JSX.Element {
     // console.log(data);
   };
 
-  // 👇 Коли користувач логіниться — редирект на Dictionary qwerty1
+  // 👇 Коли користувач логіниться — редирект на Dictionary 
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/dictionary");

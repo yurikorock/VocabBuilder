@@ -7,7 +7,8 @@ import { fetchWordsCategories, getWordsAll } from "../../redux/words/operation";
 import { Link } from "react-router-dom";
 import { openModal } from "../../redux/modal/modalSlice";
 import WordsTable from "../WordsTable/WordsTable";
-import { resetWords, setPage } from "../../redux/words/wordsSlice";
+import { setPage } from "../../redux/words/wordsSlice";
+
 
 export default function DashBoard(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -25,6 +26,10 @@ export default function DashBoard(): JSX.Element {
   // Simple pagination state (optional)
 
   const [limit] = useState(7); // to match your swagger example
+
+  useEffect(() => {
+  dispatch(setPage(1));
+}, []);
 
   //Categories Redux
   const categories = useAppSelector(selectCategories);
@@ -46,8 +51,8 @@ export default function DashBoard(): JSX.Element {
   //   }, [debouncedFilter, selectedCategory, verbType]);
   useEffect(() => {
   dispatch(setPage(1)); // reset page
-  dispatch(resetWords());
-}, [debouncedFilter, selectedCategory, verbType, dispatch]);
+  
+}, [debouncedFilter, selectedCategory, verbType]);
 
   useEffect(() => {
     // Build safe params for thunk
