@@ -33,7 +33,7 @@ export const fetchWordsCategories = createAsyncThunk(
     }
   }
 );
-
+//додавання власного слова
 export const addOwnWordsTable = createAsyncThunk(
   "words/addOwnWord",
   async (newWordData: any, thunkAPI) => {
@@ -46,8 +46,10 @@ export const addOwnWordsTable = createAsyncThunk(
       }
       setAuthHeader(token);
       const res = await axios.post("/words/create", newWordData);
+
       return res.data;
     } catch (error: any) {
+      console.log(error.response?.data);
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
           error.message ||
@@ -64,7 +66,7 @@ export interface WordsQuery {
   page?: number;
   limit?: number;
 }
-
+//отримання всіх слів словника
 export const getWordsAll = createAsyncThunk<
   WordsResponse,
   WordsQuery,
@@ -86,18 +88,17 @@ export const getWordsAll = createAsyncThunk<
       query.verbType = params.verbType; // "regular" | "irregular"
     }
     if (params.keyword?.trim()) {
-     
       query.keyword = params.keyword.trim();
     }
 
-      // Pagination (backend requires these)
+    // Pagination (backend requires these)
     query.page = params.page ?? 1;
     query.limit = params.limit ?? 7; // pick your default
 
     const res = await axios.get<WordsResponse>("/words/all", {
       params: query,
     });
-    console.log("🔥 BACKEND RESPONSE:", res.data);
+    // console.log("🔥 BACKEND RESPONSE:", res.data);
     return res.data as WordsResponse;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
@@ -107,3 +108,68 @@ export const getWordsAll = createAsyncThunk<
     );
   }
 });
+
+//     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!     //
+//отримання власних слів на вивчення
+
+export const getWordsOwnAll = createAsyncThunk<
+  WordsResponse,
+  WordsQuery,
+  { state: RootState }
+>("words/getWordsOwnAll", async (params, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.token;
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("No token found");
+    }
+    setAuthHeader(token);
+
+    const query: Record<string, string | number> = {};
+    if (params.category && params.category !== "all") {
+      query.category = params.category;
+    }
+    if (params.verbType && params.category === "verb") {
+      query.verbType = params.verbType; // "regular" | "irregular"
+    }
+    if (params.keyword?.trim()) {
+      query.keyword = params.keyword.trim();
+    }
+
+    // Pagination (backend requires these)
+    query.page = params.page ?? 1;
+    query.limit = params.limit ?? 7; // pick your default
+
+    const res = await axios.get<WordsResponse>("/words/own", {
+      params: query,
+    });
+    // console.log("🔥 BACKEND RESPONSE:", res.data);
+    return res.data as WordsResponse;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.data?.message ||
+        error.message ||
+        "Bad request (invalid request body)"
+    );
+  }
+});
+
+// отримання статистики кількості слів для вивчення
+interface WordsStatisticsResponse {
+  totalCount: number;
+}
+
+export const getWordsStatistics = createAsyncThunk<WordsStatisticsResponse>(
+  "words/getWordsStatistics",
+  async (_, thunkAPI) => {
+    try {
+      const res = await axios.get<WordsStatisticsResponse>("/words/statistics");
+      // console.log("🔥 BACKEND RESPONSE:", res.data);
+      return res.data as WordsStatisticsResponse;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
+  }
+);

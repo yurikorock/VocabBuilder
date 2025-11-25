@@ -2,7 +2,10 @@ import { useEffect, useState, type JSX } from "react";
 import Select from "react-select";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectCategories } from "../../redux/words/selectors";
-import { fetchWordsCategories } from "../../redux/words/operation";
+import {
+  addOwnWordsTable,
+  fetchWordsCategories,
+} from "../../redux/words/operation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -76,7 +79,18 @@ export default function AddWordModal({ onClose }: MenuModalProps): JSX.Element {
   const whatIsCategorySelected = selectedCategory?.value;
 
   const onSubmit = (data: FormData) => {
-    console.log("Form OK", data);
+    const payload: Record<string, any> = {
+      ua: data.ukrainian,
+      en: data.english,
+      category: data.category,
+    };
+     // додаємо verbType тільки якщо це "verb"
+  if (data.category === "verb" && data.verbType) {
+    payload.verbType = data.verbType;
+  }
+
+    console.log("Payload to send:", payload);
+    dispatch(addOwnWordsTable(payload));
   };
 
   return (

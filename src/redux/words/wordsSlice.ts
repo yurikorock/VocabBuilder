@@ -3,6 +3,8 @@ import {
   addOwnWordsTable,
   fetchWordsCategories,
   getWordsAll,
+  getWordsOwnAll,
+  getWordsStatistics,
 } from "./operation";
 import type { Word } from "./types";
 
@@ -13,6 +15,7 @@ interface WordState {
   totalPages: number;
   perPage: number;
   hasMore: boolean;
+  totalCount: number;
   isLoading: boolean;
   error: string | null;
 }
@@ -24,6 +27,7 @@ const initialState: WordState = {
   totalPages: 1,
   perPage: 7,
   hasMore: false,
+  totalCount: 0,
   isLoading: false,
   error: null,
 };
@@ -89,6 +93,30 @@ const wordsSlice = createSlice({
       .addCase(getWordsAll.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+      // ➕ отримання власних слів
+      .addCase(getWordsOwnAll.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getWordsOwnAll.fulfilled, (state, action) => {
+        const payload = action.payload;
+        state.isLoading = false;
+
+        state.words = payload.results;
+
+        state.page = payload.page;
+        state.totalPages = payload.totalPages;
+        state.perPage = payload.perPage;
+
+        state.hasMore = payload.page < payload.totalPages;
+      })
+      .addCase(getWordsOwnAll.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getWordsStatistics.fulfilled, (state, action) => {
+        state.totalCount = action.payload.totalCount;
       });
   },
 });

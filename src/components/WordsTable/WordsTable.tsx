@@ -15,13 +15,15 @@ import {
   selectWordsTotalPage,
 } from "../../redux/words/selectors.ts";
 
-import Pagination from "../Pagination/Pagination.tsx";
+import WordsPagination from "../WordsPagination/WordsPagination.tsx";
 
 export default function WordsTable(): JSX.Element {
   
 
   const words = useAppSelector(selectWords);
   const isLoading = useAppSelector(selectWordsLoading);
+
+//   console.log("WORDS FROM BACKEND:", words);
   const data = useMemo(() => words, [words]);
   const page = useAppSelector(selectWordsPage);
   const totalPages = useAppSelector(selectWordsTotalPage);
@@ -64,7 +66,7 @@ export default function WordsTable(): JSX.Element {
           ))}
         </tbody>
       </table>
-      <Pagination page={page} totalPages={totalPages}/>
+      <WordsPagination page={page} totalPages={totalPages}/>
     </div>
   );
 }

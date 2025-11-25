@@ -2,8 +2,8 @@ import { useEffect, useState, type JSX } from "react";
 import Select from "react-select";
 import css from "./DashBoard.module.css";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { selectCategories, selectWordsPage } from "../../redux/words/selectors";
-import { fetchWordsCategories, getWordsAll } from "../../redux/words/operation";
+import { selectCategories, selectWordsPage, selectWordsStatistics } from "../../redux/words/selectors";
+import { fetchWordsCategories, getWordsOwnAll, getWordsStatistics } from "../../redux/words/operation";
 import { Link } from "react-router-dom";
 import { openModal } from "../../redux/modal/modalSlice";
 import WordsTable from "../WordsTable/WordsTable";
@@ -14,6 +14,7 @@ export default function DashBoard(): JSX.Element {
   const dispatch = useAppDispatch();
   const openAddWord = () => dispatch(openModal({ type: "addWord" }));
   const page = useAppSelector(selectWordsPage);
+  const wordsStatistics = useAppSelector(selectWordsStatistics);
 
   const [filter, setFilter] = useState("");
   const [debouncedFilter, setDebouncedFilter] = useState("");
@@ -29,6 +30,7 @@ export default function DashBoard(): JSX.Element {
 
   useEffect(() => {
   dispatch(setPage(1));
+  
 }, []);
 
   //Categories Redux
@@ -41,14 +43,15 @@ export default function DashBoard(): JSX.Element {
   }, [dispatch]);
 
   useEffect(() => {
+  dispatch(getWordsStatistics());
+}, [dispatch]);
+
+  useEffect(() => {
     const t = setTimeout(() => setDebouncedFilter(filter.trim()), 300);
     return () => clearTimeout(t);
   }, [filter]);
 
-  // Reset page on any filter change
-  //   useEffect(() => {
-  //     setPage(1);
-  //   }, [debouncedFilter, selectedCategory, verbType]);
+
   useEffect(() => {
   dispatch(setPage(1)); // reset page
   
@@ -65,9 +68,8 @@ export default function DashBoard(): JSX.Element {
     // Keyword must be passed as 'keyword'
     const _keyword = debouncedFilter || "";
 
-  
     dispatch(
-      getWordsAll({
+      getWordsOwnAll({
         category: _category,
         verbType: _verbType,
         keyword: _keyword,
@@ -75,6 +77,8 @@ export default function DashBoard(): JSX.Element {
         limit,
       })
     );
+
+    
   }, [debouncedFilter, selectedCategory, verbType, page, limit, dispatch]);
 
   //перетворюємо масив  у потрібний для react-select формат.
@@ -84,6 +88,8 @@ export default function DashBoard(): JSX.Element {
   }));
 
   const whatIsCategorySelected = selectedCategory?.value;
+
+  
 
   return (
     <div className={css.container}>
@@ -141,7 +147,7 @@ export default function DashBoard(): JSX.Element {
 
       <div className={css.statistics}>
         <h4 className={css.stat_title}>To study:</h4>
-        <p className={css.stat_number}>NN</p>
+        <p className={css.stat_number}>{wordsStatistics}</p>
       </div>
       <div className={css.block_add_word}>
         <button

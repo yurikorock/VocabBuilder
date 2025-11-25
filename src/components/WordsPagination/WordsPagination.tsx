@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import css from "./Pagination.module.css";
+import css from "./WordsPagination.module.css";
 import { useAppDispatch } from "../../redux/store";
 import { setPage } from "../../redux/words/wordsSlice";
 
@@ -8,7 +8,7 @@ interface PaginationProps {
   totalPages: number;
 }
 
-export default function Pagination({
+export default function WordsPagination({
   page,
   totalPages,
 }: PaginationProps): JSX.Element {
@@ -16,6 +16,11 @@ export default function Pagination({
 
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
+
+    if (totalPages <= 1) {
+      // тільки одна сторінка
+      return [1];
+    }
 
     // Перша сторінка завжди
     pages.push(1);

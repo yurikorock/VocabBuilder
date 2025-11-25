@@ -4,6 +4,8 @@ export interface Word {
   ua: string;
   category: string;
   isIrregular: boolean;
+  owner?: string;
+  progress?: number;
 }
 
 export interface WordsResponse {
@@ -11,4 +13,5 @@ export interface WordsResponse {
   totalPages: number;
   page: number;
   perPage: number;
+  totalCount: number;
 }
