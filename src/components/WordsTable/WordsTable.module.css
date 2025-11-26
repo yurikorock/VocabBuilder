@@ -6,9 +6,67 @@
     background-color: transparent;
 }
 
-.table{
-width: 343px;
-height: 563px;
-margin-bottom: 32px;
-background: var(--white);
+.table {
+    width: 343px;
+
+    margin-bottom: 32px;
+    background: var(--white);
+    border-collapse: collapse;
+
+}
+
+.th,
+.td {
+    text-align: start;
+    vertical-align: middle;
+}
+.th:first-child{
+border-radius: 8px 0 0 0;
+}
+.th:last-child{
+border-radius:  0 8px 0 0 ;
+}
+.th {
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+    
+    padding: 16px 14px 16px 14px;
+
+    height: 25px;
+
+    background: rgba(133, 170, 159, 0.1);
+
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--black);
+}
+.th:last-child {
+  border-right: none;
+}
+.table_row {
+    height: 54px;
+}
+
+.table_row_cell {
+    height: 70px;
+}
+
+.td {
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+    padding: 16px 14px;
+
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--black);
+
+    background: var(--white);
+}
+.td:last-child {
+  border-right: none;
+  
+}
+/* прибираємо нижню лінію таблиці */
+.table tbody tr:last-child .td {
+  border-bottom: none;
 }

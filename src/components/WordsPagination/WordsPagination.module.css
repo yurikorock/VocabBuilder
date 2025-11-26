@@ -1,10 +1,10 @@
 .container_pagination {
-    max-width: 326px;
+    width: 326px;
     height: 32px;
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: row;
     gap: 10px;
 }

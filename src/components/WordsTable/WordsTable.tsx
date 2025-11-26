@@ -18,12 +18,10 @@ import {
 import WordsPagination from "../WordsPagination/WordsPagination.tsx";
 
 export default function WordsTable(): JSX.Element {
-  
-
   const words = useAppSelector(selectWords);
   const isLoading = useAppSelector(selectWordsLoading);
 
-//   console.log("WORDS FROM BACKEND:", words);
+  //   console.log("WORDS FROM BACKEND:", words);
   const data = useMemo(() => words, [words]);
   const page = useAppSelector(selectWordsPage);
   const totalPages = useAppSelector(selectWordsTotalPage);
@@ -31,18 +29,22 @@ export default function WordsTable(): JSX.Element {
     columns: columnDef,
     data,
     getCoreRowModel: getCoreRowModel(),
+    
+    columnResizeMode: "onChange",
+    
+    
   });
 
   return (
     <div className={css.container_word_table}>
       {isLoading && <p>Loading...</p>}
       <table className={css.table}>
-        <thead>
+        <thead className={css.thead}>
           {/* // name of columns header // */}
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} className={css.table_row}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th key={header.id} className={css.th} style={{ width: header.getSize() }}>
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
@@ -56,9 +58,9 @@ export default function WordsTable(): JSX.Element {
         {/* // rows create // */}
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className={css.table_row_cell}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
+                <td key={cell.id} className={css.td} style={{ width: cell.column.getSize() }}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -66,7 +68,7 @@ export default function WordsTable(): JSX.Element {
           ))}
         </tbody>
       </table>
-      <WordsPagination page={page} totalPages={totalPages}/>
+      <WordsPagination page={page} totalPages={totalPages} />
     </div>
   );
 }
