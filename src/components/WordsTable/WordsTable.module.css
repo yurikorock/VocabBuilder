@@ -66,6 +66,14 @@ border-radius:  0 8px 0 0 ;
   border-right: none;
   
 }
+.progress_cell{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;      /* important: take full td height */
+  width: 100%;
+}
+
 /* прибираємо нижню лінію таблиці */
 .table tbody tr:last-child .td {
   border-bottom: none;

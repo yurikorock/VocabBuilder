@@ -4,7 +4,7 @@ import {
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { columnDef } from "./columns.ts";
+import { columns } from "./columns";
 
 import css from "./WordsTable.module.css";
 import { useAppSelector } from "../../redux/store.ts";
@@ -26,7 +26,7 @@ export default function WordsTable(): JSX.Element {
   const page = useAppSelector(selectWordsPage);
   const totalPages = useAppSelector(selectWordsTotalPage);
   const table = useReactTable({
-    columns: columnDef,
+    columns: columns,
     data,
     getCoreRowModel: getCoreRowModel(),
     

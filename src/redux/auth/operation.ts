@@ -10,7 +10,7 @@ type Token = string;
 // Utility to add JWT
 const setAuthHeader = (token: Token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+}; 
 
 // Utility to remove JWT
 const clearAuthHeader = (): void => {
