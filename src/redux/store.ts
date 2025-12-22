@@ -40,7 +40,7 @@ interface AuthState {
 const authPersistConfig: PersistConfig<AuthState> = {
   key: "auth",
   storage,
-  whitelist: ["token", "isLoggedIn", "user"], // зберігаємо не лише токен
+  whitelist: ["token", "isLoggedIn"], // зберігаємо не лише токен
 };
 
 // ----- Persisted reducer with correct generics -----

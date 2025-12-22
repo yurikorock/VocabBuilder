@@ -1,0 +1,51 @@
+.container_popover {
+    position: absolute;
+    z-index: 200;
+    top: 40px;
+    right: -12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 12px 24px;
+    gap: 8px;
+
+    border-radius: 15px;
+    padding: 12px 24px;
+    width: 117px;
+    height: 70px;
+
+    box-shadow: 0 4px 47px 0 rgba(18, 20, 23, 0.08);
+    background: #fff;
+}
+
+.block {
+    display: flex;
+    flex-direction: row;
+}
+
+.icon {
+    fill: none;
+    width: 16px;
+    height: 16px;
+    stroke: var(--green);
+
+}
+
+.btn {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 19px;
+    width: 69px;
+    gap: 8px;
+    cursor: pointer;
+
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--black);
+}

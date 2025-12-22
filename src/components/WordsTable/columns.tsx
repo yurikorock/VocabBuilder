@@ -2,6 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import type { Word } from "../../redux/words/types";
 import css from "./WordsTable.module.css"
+import ActionsBtn from "../ActionsBtn/ActionsBtn";
 
 
 export const columns: ColumnDef<Word>[] = [
@@ -32,6 +33,6 @@ export const columns: ColumnDef<Word>[] = [
     id: "actions",
     header: "",
     size: 50,
-    cell: () => "...",
+    cell: () => <ActionsBtn/>,
   },
 ];

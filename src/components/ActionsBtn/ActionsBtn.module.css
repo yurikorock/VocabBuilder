@@ -1,0 +1,11 @@
+.wrapper {
+    position: relative;
+}
+
+.btn {
+    all:unset;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
