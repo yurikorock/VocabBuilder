@@ -1,10 +1,17 @@
+import type { JSX } from "react";
 import css from "./Popover.module.css";
+import { useAppDispatch } from "../../redux/store";
+import { openModal } from "../../redux/modal/modalSlice";
 
-export default function Popover() {
+export default function Popover(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const openEditWordModal = () => dispatch(openModal({type: "editWord"}));
+
+
   return (
     <div className={css.container_popover}>
       <div className={css.block}>
-        <button className={css.btn}>
+        <button className={css.btn} onClick={openEditWordModal}>
           <svg className={css.icon} width="16" height="16">
             <use href="/sprite.svg#icon-pencil"></use>
           </svg>

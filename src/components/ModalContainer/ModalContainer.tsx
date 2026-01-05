@@ -5,6 +5,7 @@ import { closeModal } from "../../redux/modal/modalSlice";
 import MenuModal from "../MenuModal/MenuModal";
 import Modal from "../Modal/Modal";
 import AddWordModal from "../AddWordModal/AddWordModal";
+import EditWordModal from "../EditWordModal/EditWordModal";
 
 export default function ModalContainer():JSX.Element | null {
     const dispatch =  useAppDispatch();
@@ -18,6 +19,7 @@ export default function ModalContainer():JSX.Element | null {
     <Modal onClose={handleClose}>
       {modalType === "menu" && <MenuModal onClose = {handleClose}/>}
       {modalType === "addWord" && <AddWordModal onClose = {handleClose} />}
+      {modalType === "editWord" && <EditWordModal onClose = {handleClose}/>}
     </Modal>
   );
 }
