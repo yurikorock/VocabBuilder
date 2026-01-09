@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addOwnWordsTable,
+  editOwnWord,
   fetchWordsCategories,
   getWordsAll,
   getWordsOwnAll,
@@ -117,6 +118,18 @@ const wordsSlice = createSlice({
       })
       .addCase(getWordsStatistics.fulfilled, (state, action) => {
         state.totalCount = action.payload.totalCount;
+      })
+      // ➕ редагування свого слова
+      .addCase(editOwnWord.fulfilled, (state, action) => {
+        const updatedWord = action.payload;
+
+        const index = state.words.findIndex(
+          (word) => word._id === updatedWord._id
+        );
+
+        if (index !== -1) {
+          state.words[index] = updatedWord;
+        }
       });
   },
 });

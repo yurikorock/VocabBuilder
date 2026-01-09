@@ -12,3 +12,7 @@ export const selectWordsPage = (state: RootState) => state.words.page;
 export const selectWordsTotalPage = (state: RootState) => state.words.totalPages;
 
 export const selectWordsStatistics = (state: RootState) => state.words.totalCount;
+
+
+export const selectModalWordId = (state: RootState) =>
+  state.modal.wordId;

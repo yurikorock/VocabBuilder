@@ -3,9 +3,13 @@ import css from "./Popover.module.css";
 import { useAppDispatch } from "../../redux/store";
 import { openModal } from "../../redux/modal/modalSlice";
 
-export default function Popover(): JSX.Element {
+interface PopoverProps {
+  wordId: string;
+}
+
+export default function Popover({ wordId }: PopoverProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const openEditWordModal = () => dispatch(openModal({type: "editWord"}));
+  const openEditWordModal = () => dispatch(openModal({type: "editWord", wordId}));
 
 
   return (

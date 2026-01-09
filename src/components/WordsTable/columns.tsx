@@ -1,4 +1,4 @@
-import type { ColumnDef } from "@tanstack/react-table";
+import type { CellContext, ColumnDef } from "@tanstack/react-table";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import type { Word } from "../../redux/words/types";
 import css from "./WordsTable.module.css"
@@ -33,6 +33,10 @@ export const columns: ColumnDef<Word>[] = [
     id: "actions",
     header: "",
     size: 50,
-    cell: () => <ActionsBtn/>,
+    cell: (context: CellContext<Word, unknown>) => {
+      // row.original тепер правильно типізований
+      const wordId = (context.row.original as Word & { _id?: string })._id ?? "";
+      return <ActionsBtn wordId={wordId} />;
+    },
   },
 ];

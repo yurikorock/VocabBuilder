@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import type { WordsResponse } from "./types";
+import type { Word, WordsResponse } from "./types";
 
 axios.defaults.baseURL = "https://vocab-builder-backend.p.goit.global/api";
 
@@ -170,6 +170,28 @@ export const getWordsStatistics = createAsyncThunk<WordsStatisticsResponse>(
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message
       );
+    }
+  }
+);
+
+// редагувати власні слова
+
+type EditWordPayload = {
+  id: string,
+  en: string,
+  ua: string,
+  category?: string;
+}
+
+export const editOwnWord = createAsyncThunk<Word, EditWordPayload, {rejectValue: string}>(
+  "words/editWords",
+  async ({id, ...data}, thunkAPI) => {
+    try {
+      const response = await axios.patch(`words/edit/${id}`, data);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Edit word failed");
     }
   }
 );

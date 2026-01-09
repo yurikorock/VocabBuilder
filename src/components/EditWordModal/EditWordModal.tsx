@@ -2,7 +2,9 @@ import type { JSX } from "react";
 import { useForm } from "react-hook-form";
 import css from "./EditWordModal.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAppDispatch } from "../../redux/store";
 import * as yup from "yup";
+import { editOwnWord } from "../../redux/words/operation";
 
 const schema = yup.object({
   ukrainian: yup
@@ -20,10 +22,11 @@ type FormData = yup.InferType<typeof schema>;
 
 interface MenuModalProps {
   onClose: () => void;
+  wordId: string;
 }
 
 export default function EditWordModal({
-  onClose,
+  onClose, wordId,
 }: MenuModalProps): JSX.Element {
   const {
     register,
@@ -38,15 +41,25 @@ export default function EditWordModal({
   const watchUkrainian = watch("ukrainian");
   const watchEnglish = watch("english");
 
-  const onSubmit = (data: FormData) => {
-    const payload: Record<string, any> = {
+  const dispatch = useAppDispatch();
+ const onSubmit = (data: FormData) => {
+  dispatch(
+    editOwnWord({
+      id: wordId,
       ua: data.ukrainian,
       en: data.english,
       category: data.category,
-    };
+    })
+  )
+    .unwrap()
+    .then(() => {
+      onClose(); // закриваємо модалку після успіху
+    })
+    .catch((error:any) => {
+      console.error(error);
+    });
+};
 
-    console.log(payload);
-  };
 
   return (
     <div className={css.editwords_modal_container}>
