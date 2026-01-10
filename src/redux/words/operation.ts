@@ -177,21 +177,38 @@ export const getWordsStatistics = createAsyncThunk<WordsStatisticsResponse>(
 // редагувати власні слова
 
 type EditWordPayload = {
-  id: string,
-  en: string,
-  ua: string,
+  id: string;
+  en: string;
+  ua: string;
   category?: string;
-}
+};
 
-export const editOwnWord = createAsyncThunk<Word, EditWordPayload, {rejectValue: string}>(
-  "words/editWords",
-  async ({id, ...data}, thunkAPI) => {
-    try {
-      const response = await axios.patch(`words/edit/${id}`, data);
-      return response.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Edit word failed");
-    }
+export const editOwnWord = createAsyncThunk<
+  Word,
+  EditWordPayload,
+  { rejectValue: string }
+>("words/editWords", async ({ id, ...data }, thunkAPI) => {
+  try {
+    const response = await axios.patch(`words/edit/${id}`, data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.data?.message || "Edit word failed"
+    );
   }
-);
+});
+// видалити власні слова
+export const deleteOwnWord = createAsyncThunk<
+  string, // 👉 повертаємо id
+  string, // 👉 приймаємо id
+  { rejectValue: string }
+>("words/deleteWord", async (id, thunkAPI) => {
+  try {
+    await axios.delete(`words/delete/${id}`);
+    return id;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.data?.message || "Delete word failed"
+    );
+  }
+});

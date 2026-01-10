@@ -1,10 +1,11 @@
-import type { JSX } from "react";
+import { useEffect, type JSX } from "react";
 import { useForm } from "react-hook-form";
 import css from "./EditWordModal.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import * as yup from "yup";
 import { editOwnWord } from "../../redux/words/operation";
+import { selectWordById } from "../../redux/words/selectors";
 
 const schema = yup.object({
   ukrainian: yup
@@ -26,40 +27,56 @@ interface MenuModalProps {
 }
 
 export default function EditWordModal({
-  onClose, wordId,
+  onClose,
+  wordId,
 }: MenuModalProps): JSX.Element {
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
+  const word = useAppSelector(selectWordById(wordId));
+  const dispatch = useAppDispatch();
+
   const watchUkrainian = watch("ukrainian");
   const watchEnglish = watch("english");
 
-  const dispatch = useAppDispatch();
- const onSubmit = (data: FormData) => {
-  dispatch(
-    editOwnWord({
-      id: wordId,
-      ua: data.ukrainian,
-      en: data.english,
-      category: data.category,
-    })
-  )
-    .unwrap()
-    .then(() => {
-      onClose(); // закриваємо модалку після успіху
-    })
-    .catch((error:any) => {
-      console.error(error);
-    });
-};
+  useEffect(() => {
+  if (word) {
+    setValue("ukrainian", word.ua);
+    setValue("english", word.en);
+    setValue("category", word.category);
+  }
+}, [word, setValue]);
 
+
+  const onSubmit = (data: FormData) => {
+    dispatch(
+      editOwnWord({
+        id: wordId,
+        ua: data.ukrainian,
+        en: data.english,
+        category: data.category,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        onClose(); // закриваємо модалку після успіху
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  };
+
+  if (!word) {
+    return <p>Word not found</p>;
+  }
 
   return (
     <div className={css.editwords_modal_container}>
