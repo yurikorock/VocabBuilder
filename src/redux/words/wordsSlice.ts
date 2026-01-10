@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addOwnWordsTable,
+  deleteOwnWord,
   editOwnWord,
   fetchWordsCategories,
   getWordsAll,
@@ -130,6 +131,10 @@ const wordsSlice = createSlice({
         if (index !== -1) {
           state.words[index] = updatedWord;
         }
+      })
+      // видалення слова
+      .addCase(deleteOwnWord.fulfilled, (state, action) => {
+        state.words = state.words.filter((word) => word._id !== action.payload);
       });
   },
 });

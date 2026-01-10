@@ -15,7 +15,7 @@ export default function ActionsBtn({ wordId }: { wordId: string }) {
       <button type="button" onClick={togglePopover} className={css.btn}>
         ...
       </button>
-      {isOpen && <Popover wordId={wordId}/>}
+      {isOpen && <Popover wordId={wordId} onClose={() => setIsOpen(false)}/>}
     </div>
   );
 }
